@@ -139,7 +139,7 @@ it back to private takes the live site's CSS and JS down with it.
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
 | `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
 
-The head snippet is currently pinned to **`@v1.3.0`**.
+The head snippet is currently pinned to **`@v1.4.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -149,12 +149,12 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.3.1
+git tag v1.4.1
 git push && git push --tags
 ```
 
 Then bump the tag in the two CDN URLs in the Kajabi head snippet
-(`@v1.3.0` → `@v1.3.1`). The old version keeps serving until you do, so the
+(`@v1.4.0` → `@v1.4.1`). The old version keeps serving until you do, so the
 live page never breaks mid-release.
 
 If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
@@ -177,13 +177,12 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.3.0`.
+   `brian-d-v/sir_wade_webpage@v1.4.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
-3. **Set every section to Full Width with 0 padding.** This is required, not
-   cosmetic — the stylesheet makes no attempt to escape the container, so a
-   section left at the default width renders its band inset instead of
-   edge-to-edge.
+3. Setting each section to **Full Width** with **0 padding** is still worth
+   doing, but the stylesheet no longer depends on it — it strips the
+   wrappers' side padding and max-width itself.
 4. The nav and footer blocks are optional — skip them if you're keeping
    Kajabi's native header and footer. Nothing else depends on them.
 
@@ -193,20 +192,23 @@ Kajabi wraps every custom code block in a centred, padded container, which
 shows up as a margin around each full-width band. The two axes are handled
 very differently, and the asymmetry is deliberate:
 
-- **Sideways — the Kajabi section setting. Set every section to Full
-  Width.** The stylesheet does nothing here; blocks just fill their
-  container.
+- **Sideways — remove the constraint, don't escape it.** The same `:has()`
+  rule drops the wrappers' side padding and `max-width`, so the block fills
+  them naturally at `width: 100%`.
 
-  Two earlier versions did try to break out of the container — first with
-  `margin-inline: calc(50% - 50vw)`, then with JS that measured the real
-  offset. Both shifted blocks off the left edge in Kajabi. The CSS version
-  infers the container's position from its width, which only holds if it's
-  centred; the JS version has to pick an ancestor to measure against, and
-  Kajabi's wrappers differ between the editor, the theme preview and the
-  live page. Every guess was wrong somewhere.
+  Two earlier versions tried to *escape* the container instead — first with
+  `margin-inline: calc(50% - 50vw)`, then with JS measuring the real offset.
+  Both shifted blocks off the left edge, because both had to work out where
+  the container sat, and Kajabi's wrappers differ between the editor, the
+  theme preview and the live page.
 
-  Kajabi already does full width properly. Using its setting is both
-  simpler and the only version that works in all three contexts.
+  Removing the constraint needs no such guess. It is also strictly safer:
+  a negative margin can move a block off-screen, whereas dropping a padding
+  can only ever make something wider. Worst case here is an element keeping
+  an inset it didn't need.
+
+  `legacy/homepage-v1.html` is the proof — it reaches the edges with no CSS
+  tricks whatsoever. The constraint was always the thing to remove.
 
 - **Vertically — a `:has()` rule** zeroes padding on the four wrapper levels
   above each block. It selects on *what the wrapper contains*, since those

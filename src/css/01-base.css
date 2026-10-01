@@ -53,10 +53,16 @@
    or four up. Its padding is often an inline style, which a stylesheet
    !important still beats.
 
-   VERTICAL ONLY. An earlier version also zeroed padding-inline here, but
-   that reaches into theme markup far more than it needs to — the
-   horizontal fit is measured in src/js/05-viewport.js instead, which is
-   both exact and leaves the wrappers alone.
+   It also drops the wrappers' side padding and max-width, which is what
+   makes the bands reach the edges. Note what this is NOT: it never applies
+   a negative margin. Removing a constraint can only ever make a wrapper
+   wider, so unlike the breakouts in v1.2.x it cannot shift a block off the
+   left edge — the worst case is that something keeps an inset it didn't
+   need. That asymmetry is the whole reason this approach is safe.
+
+   legacy/homepage-v1.html reaches the edges with no CSS tricks at all,
+   which is the proof that the constraint — not the absence of a breakout —
+   was always the thing to remove.
 
    This cannot fix a gap caused by a SIBLING (an empty section or spacer
    above the first band) — delete that in the editor.
@@ -66,8 +72,9 @@
 *:has(> * > .sw-scope:not(.sw-keep-wrapper)),
 *:has(> * > * > .sw-scope:not(.sw-keep-wrapper)),
 *:has(> * > * > * > .sw-scope:not(.sw-keep-wrapper)) {
-  padding-block: 0 !important;
+  padding: 0 !important;
   margin-block: 0 !important;
+  max-width: none !important;
 }
 .sw-scope *,
 .sw-scope *::before,
