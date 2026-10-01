@@ -4,3 +4,6 @@ node_modules/
 
 # dist/ and preview.html ARE committed on purpose — jsDelivr serves dist/
 # straight from the repo, so they must be in version control.
+
+# Local Claude Code settings
+.claude/settings.local.json
