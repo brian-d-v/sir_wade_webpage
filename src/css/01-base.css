@@ -48,23 +48,30 @@
 }
 
 /* ── Collapse the Kajabi wrappers ────────────────────────────
-   The horizontal breakout above handles side margins, but the vertical
-   gap between bands comes from padding on Kajabi's own section and block
-   wrappers — which sit ABOVE us in the DOM, so we can only reach them by
-   selecting on what they contain.
+   The vertical gap between bands comes from padding on Kajabi's own
+   section and block wrappers, which sit ABOVE us in the DOM — so the only
+   way to reach them is to select on what they contain.
 
-   :has() targets the two wrapper levels closest to each block without
-   needing to know Kajabi's class names, which differ by theme. Zeroing
-   the Kajabi section padding in the editor is still the cleaner fix;
-   this is what makes the page look right before you get to it.
+   Kajabi nests roughly section > container > content > block > ours, so
+   two levels wasn't enough; the <section> carrying the padding sits three
+   or four up. Its padding is often an inline style, which a stylesheet
+   !important still beats.
 
-   If a wrapper legitimately needs its padding, give the block inside it
-   .sw-keep-wrapper and this stops applying. */
+   VERTICAL ONLY. An earlier version also zeroed padding-inline here, but
+   that reaches into theme markup far more than it needs to — the
+   horizontal fit is measured in src/js/05-viewport.js instead, which is
+   both exact and leaves the wrappers alone.
+
+   This cannot fix a gap caused by a SIBLING (an empty section or spacer
+   above the first band) — delete that in the editor.
+
+   .sw-keep-wrapper on a block opts its ancestors out. */
 *:has(> .sw-scope:not(.sw-keep-wrapper)),
-*:has(> * > .sw-scope:not(.sw-keep-wrapper)) {
+*:has(> * > .sw-scope:not(.sw-keep-wrapper)),
+*:has(> * > * > .sw-scope:not(.sw-keep-wrapper)),
+*:has(> * > * > * > .sw-scope:not(.sw-keep-wrapper)) {
   padding-block: 0 !important;
   margin-block: 0 !important;
-  padding-inline: 0 !important;
 }
 .sw-scope *,
 .sw-scope *::before,

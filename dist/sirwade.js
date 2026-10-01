@@ -48,7 +48,7 @@
          pointing this key at your own upload; .mp4/.webm/.gif all work and
          the <img> is swapped for a <video> automatically. */
       media:
-        "https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.2.0/assets/hero-rift.webp",
+        "https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.2.1/assets/hero-rift.webp",
       poster: "",
     },
 
@@ -310,44 +310,92 @@
 })();
 
 /* ==========================================================================
-   05 — VIEWPORT WIDTH
+   05 — FULL-BLEED FITTER
 
-   Publishes the viewport width WITHOUT the scrollbar as --sw-vw.
+   Makes every block span the viewport edge to edge, whatever Kajabi wraps
+   it in.
 
-   The full-bleed breakout in 01-base.css needs this. The obvious value,
-   100vw, includes the scrollbar gutter on desktop, so a block sized to it
-   ends up a scrollbar wider than the visible page and introduces horizontal
-   scroll. documentElement.clientWidth excludes it.
+   WHY NOT THE USUAL CSS TRICK
+   `margin-inline: calc(50% - 50vw)` only works if the block's container is
+   perfectly centred in the viewport, because it infers the container's
+   offset from its width. Kajabi's preview puts the page in a frame with an
+   editor rail, and themes add asymmetric wrappers, so that inference is
+   wrong — the block ends up shifted and clipped on one side.
 
-   The CSS falls back to 100vw until this runs, so the page is never broken
-   while the script loads — just potentially a few pixels wide.
+   Instead: neutralise our own correction, measure where the block actually
+   lands, and offset by exactly that. No assumption about the ancestors.
+
+   The CSS keeps the calc() version as a pre-JS fallback, so a block is
+   roughly right before this runs and exactly right after.
    ========================================================================== */
 
 (function () {
   "use strict";
 
   var root = document.documentElement;
+  var SEL = ".sw-scope:not(.sw-contained)";
 
-  function sync() {
-    root.style.setProperty("--sw-vw", root.clientWidth + "px");
+  function fit() {
+    var vw = root.clientWidth; /* excludes the scrollbar; 100vw does not */
+    root.style.setProperty("--sw-vw", vw + "px");
+
+    var blocks = document.querySelectorAll(SEL);
+
+    /* Two passes. Clearing every block first means each measurement happens
+       against a settled layout — measuring and writing one block at a time
+       lets an earlier correction skew the next block's reading. */
+    for (var i = 0; i < blocks.length; i++) {
+      var el = blocks[i];
+      el.style.marginLeft = "0px";
+      el.style.marginRight = "0px";
+      el.style.width = "auto";
+      el.style.maxWidth = "none";
+    }
+
+    for (var j = 0; j < blocks.length; j++) {
+      var b = blocks[j];
+      /* Distance from the document's left edge, scroll-independent. */
+      var left = b.getBoundingClientRect().left + window.pageXOffset;
+      b.style.marginLeft = -left + "px";
+      b.style.marginRight = "0px";
+      b.style.width = vw + "px";
+      b.style.maxWidth = vw + "px";
+    }
   }
 
-  sync();
+  /* Coalesce bursts of layout changes into one fit per frame. */
+  var queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () {
+      queued = false;
+      fit();
+    });
+  }
 
-  /* ResizeObserver catches viewport changes AND layout shifts that change
-     the scrollbar's presence (a lazy image landing, a drawer opening) —
-     a resize listener alone misses those. */
+  schedule();
+
   if (window.ResizeObserver) {
-    new ResizeObserver(sync).observe(root);
+    /* Catches viewport resizes and anything that changes the scrollbar's
+       presence — a lazy image landing, a drawer opening — which a resize
+       listener alone misses. */
+    new ResizeObserver(schedule).observe(root);
   } else {
-    window.addEventListener("resize", sync);
-    window.addEventListener("orientationchange", sync);
+    window.addEventListener("resize", schedule);
+    window.addEventListener("orientationchange", schedule);
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", sync);
+    document.addEventListener("DOMContentLoaded", schedule);
   }
-  window.addEventListener("load", sync);
+  /* Fonts and images settle after load and can shift the wrappers. */
+  window.addEventListener("load", schedule);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(schedule);
+  }
+
+  window.SWBleed = { fit: schedule };
 })();
 
 /* ==========================================================================
