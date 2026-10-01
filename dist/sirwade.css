@@ -86,16 +86,10 @@
   --sw-hero-arc-cx: 99.5%;
   --sw-hero-arc-cy: 157%;
 
-  /* ── Full-bleed ─────────────────────────────────────────────
-     --sw-vw is the viewport width EXCLUDING the scrollbar. 100vw
-     includes it, which would push a full-bleed block a scrollbar's
-     width too wide and cause horizontal scroll; src/js/05-viewport.js
-     overwrites this with the measured value on load and resize.
-
+  /* ── Spacing escape hatch ───────────────────────────────────
      --sw-bleed-y pulls sections together vertically. Leave it at 0 and
      zero the section padding in the Kajabi editor; set it to a negative
      length only if a theme forces padding you can't reach. */
-  --sw-vw: 100vw;
   --sw-bleed-y: 0px;
 
   /* ── Motion ─────────────────────────────────────────────── */
@@ -117,39 +111,35 @@
    at the bottom of this file clean up what's left.
    ========================================================================== */
 
-/* ── Full-bleed by default ───────────────────────────────────
-   Kajabi wraps every custom code block in a centred, padded container,
-   which leaves a visible margin around each of these full-width bands.
-   Zeroing it in the editor is the clean fix, but themes vary in how much
-   of that padding they actually expose, so every block breaks out of its
-   container here as well.
+/* ── Width ───────────────────────────────────────────────────
+   Blocks simply fill their container. They do NOT try to break out of it.
 
-   The breakout is the standard centred-container escape: push out by half
-   the difference between the container and the viewport. --sw-vw excludes
-   the scrollbar (see 00-tokens.css), so this cannot cause horizontal
-   scroll the way a raw 100vw would.
+   Two earlier attempts at a breakout both failed in Kajabi, and the reason
+   is the same each time: any CSS escape has to guess where its container
+   sits, and a JS version has to guess which ancestor to measure against.
+   Kajabi's wrappers differ between the editor, the theme preview and the
+   live page, so every guess was wrong somewhere and the block ended up
+   shifted and clipped off the left edge.
 
-   Add .sw-contained to a block root to opt out. */
+   Full width is Kajabi's job, and it already does it properly: set the
+   SECTION to full width in the editor and the block fills the viewport
+   with no tricks at all. Horizontal spacing is now entirely that setting.
+
+   The vertical reset below stays, because section padding has no
+   equivalent per-section control in every theme. */
 .sw-scope {
   font-family: var(--sw-font-body) !important;
   font-weight: 400;
   color: var(--sw-text);
   line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  margin-block: var(--sw-bleed-y);
   position: relative;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-
-  width: var(--sw-vw);
-  max-width: var(--sw-vw);
-  margin-inline: calc(50% - var(--sw-vw) / 2);
-  margin-block: var(--sw-bleed-y);
-}
-.sw-scope.sw-contained {
-  width: 100%;
-  max-width: 100%;
-  margin-inline: 0;
-  margin-block: 0;
 }
 
 /* ── Collapse the Kajabi wrappers ────────────────────────────
@@ -380,12 +370,13 @@
   white-space: nowrap;
 }
 
-/* Legacy alias — the breakout is now the default on .sw-scope. Kept so
-   blocks pasted before that change keep working. */
-.sw-scope.sw-bleed {
-  width: var(--sw-vw);
-  max-width: var(--sw-vw);
-  margin-inline: calc(50% - var(--sw-vw) / 2);
+/* No-ops. Blocks pasted while the breakout existed may still carry these
+   classes; neutralising them here keeps that markup working unchanged. */
+.sw-scope.sw-bleed,
+.sw-scope.sw-contained {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1023,8 +1014,8 @@
 /* ── Marquee ─────────────────────────────────────────────── */
 .sw-scope.sw-reviews .sw-marquee {
   position: relative;
-  width: var(--sw-vw);
-  margin-inline: calc(50% - var(--sw-vw) / 2);
+  width: 100%;
+  margin-inline: 0;
   overflow: hidden;
   /* fade the cards out at both edges instead of hard-cutting them */
   -webkit-mask-image: linear-gradient(
@@ -1332,8 +1323,8 @@
 /* ── Coverflow ───────────────────────────────────────────── */
 .sw-scope.sw-tutorials .sw-flow {
   position: relative;
-  width: var(--sw-vw);
-  margin-inline: calc(50% - var(--sw-vw) / 2);
+  width: 100%;
+  margin-inline: 0;
   height: clamp(220px, 32vw, 470px);
   perspective: 1600px;
   perspective-origin: 50% 50%;

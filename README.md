@@ -139,7 +139,7 @@ it back to private takes the live site's CSS and JS down with it.
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
 | `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
 
-The head snippet is currently pinned to **`@v1.2.1`**.
+The head snippet is currently pinned to **`@v1.3.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -149,12 +149,12 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.2.2
+git tag v1.3.1
 git push && git push --tags
 ```
 
 Then bump the tag in the two CDN URLs in the Kajabi head snippet
-(`@v1.2.1` → `@v1.2.2`). The old version keeps serving until you do, so the
+(`@v1.3.0` → `@v1.3.1`). The old version keeps serving until you do, so the
 live page never breaks mid-release.
 
 If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
@@ -177,55 +177,63 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.2.1`.
+   `brian-d-v/sir_wade_webpage@v1.3.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
-3. For every section, set the Kajabi section to **full width** with **0
-   padding**. The blocks manage their own spacing; Kajabi's padding fights the
-   full-bleed bands and the wave dividers.
+3. **Set every section to Full Width with 0 padding.** This is required, not
+   cosmetic — the stylesheet makes no attempt to escape the container, so a
+   section left at the default width renders its band inset instead of
+   edge-to-edge.
 4. The nav and footer blocks are optional — skip them if you're keeping
    Kajabi's native header and footer. Nothing else depends on them.
 
 ### Gaps around the blocks
 
 Kajabi wraps every custom code block in a centred, padded container, which
-shows up as a margin around each full-width band. The stylesheet handles this
-on its own, in two parts:
+shows up as a margin around each full-width band. The two axes are handled
+very differently, and the asymmetry is deliberate:
 
-- **Sideways** — `src/js/05-viewport.js` clears each block's margins,
-  measures where it actually lands, and offsets by exactly that.
+- **Sideways — the Kajabi section setting. Set every section to Full
+  Width.** The stylesheet does nothing here; blocks just fill their
+  container.
 
-  The usual CSS trick, `margin-inline: calc(50% - 50vw)`, *infers* the
-  container's offset from its width, so it only works when the container is
-  perfectly centred in the viewport. Kajabi's preview frame and asymmetric
-  theme wrappers break that assumption, and the block ends up shifted and
-  clipped on one side. Measuring makes no assumption about the ancestors.
-  The calc() version stays in the CSS purely as a pre-JS fallback.
+  Two earlier versions did try to break out of the container — first with
+  `margin-inline: calc(50% - 50vw)`, then with JS that measured the real
+  offset. Both shifted blocks off the left edge in Kajabi. The CSS version
+  infers the container's position from its width, which only holds if it's
+  centred; the JS version has to pick an ancestor to measure against, and
+  Kajabi's wrappers differ between the editor, the theme preview and the
+  live page. Every guess was wrong somewhere.
 
-- **Vertically** — a `:has()` rule zeroes padding on the four wrapper levels
+  Kajabi already does full width properly. Using its setting is both
+  simpler and the only version that works in all three contexts.
+
+- **Vertically — a `:has()` rule** zeroes padding on the four wrapper levels
   above each block. It selects on *what the wrapper contains*, since those
   wrappers are Kajabi's and their class names vary by theme. Four levels
   because Kajabi nests roughly `section > container > content > block`, and
   the padding lives on the outermost one.
 
-  This is vertical-only on purpose — reaching into theme markup sideways
-  isn't needed now the horizontal fit is measured.
+  This one stays in CSS because it only ever *removes* spacing. It can't
+  mis-position anything, so the failure mode that killed the horizontal
+  version doesn't apply.
 
 So a freshly pasted block should sit flush without any editor work. If a gap
 survives:
 
-1. **Look for a sibling.** Neither fix can touch an empty section, spacer
-   block or hidden header sitting *beside* our blocks rather than wrapping
-   them — only ancestors are reachable from CSS. A large gap above the first
-   band is almost always this. Delete it in the editor.
-2. Zero the section's top/bottom padding in the editor and set its width to
-   Full. This is the real fix — the CSS is a safety net.
-3. As a last resort, set `--sw-bleed-y: -40px` in the head snippet's `:root`
-   block to pull the bands together.
+1. **Bands not reaching the edges** — the section isn't set to Full Width.
+   Editor → section settings → Width → Full.
+2. **A gap above the first band** — look for a *sibling*: an empty section,
+   a spacer block, or a hidden theme header still reserving its space. CSS
+   can only reach ancestors, so nothing here can remove it. Delete it in the
+   editor.
+3. **Leftover space between bands** — zero the section's top/bottom padding
+   in the editor. If a theme won't let you, set `--sw-bleed-y: -40px` in the
+   head snippet's `:root` block as a last resort.
 
-To opt a block out of any of this, add `sw-contained` (keeps the container
-width) or `sw-keep-wrapper` (leaves the wrapper padding alone) to its root
-element.
+`sw-keep-wrapper` on a block root opts its ancestors out of the vertical
+reset. `sw-contained` and `sw-bleed` still parse but do nothing — they're
+kept so blocks pasted against older versions keep working.
 
 ### Before going live
 

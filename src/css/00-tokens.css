@@ -81,16 +81,10 @@
   --sw-hero-arc-cx: 99.5%;
   --sw-hero-arc-cy: 157%;
 
-  /* ── Full-bleed ─────────────────────────────────────────────
-     --sw-vw is the viewport width EXCLUDING the scrollbar. 100vw
-     includes it, which would push a full-bleed block a scrollbar's
-     width too wide and cause horizontal scroll; src/js/05-viewport.js
-     overwrites this with the measured value on load and resize.
-
+  /* ── Spacing escape hatch ───────────────────────────────────
      --sw-bleed-y pulls sections together vertically. Leave it at 0 and
      zero the section padding in the Kajabi editor; set it to a negative
      length only if a theme forces padding you can't reach. */
-  --sw-vw: 100vw;
   --sw-bleed-y: 0px;
 
   /* ── Motion ─────────────────────────────────────────────── */

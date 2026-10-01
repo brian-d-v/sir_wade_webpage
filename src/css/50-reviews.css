@@ -38,8 +38,8 @@
 /* ── Marquee ─────────────────────────────────────────────── */
 .sw-scope.sw-reviews .sw-marquee {
   position: relative;
-  width: var(--sw-vw);
-  margin-inline: calc(50% - var(--sw-vw) / 2);
+  width: 100%;
+  margin-inline: 0;
   overflow: hidden;
   /* fade the cards out at both edges instead of hard-cutting them */
   -webkit-mask-image: linear-gradient(

@@ -43,7 +43,7 @@
          pointing this key at your own upload; .mp4/.webm/.gif all work and
          the <img> is swapped for a <video> automatically. */
       media:
-        "https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.2.1/assets/hero-rift.webp",
+        "https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.3.0/assets/hero-rift.webp",
       poster: "",
     },
 
