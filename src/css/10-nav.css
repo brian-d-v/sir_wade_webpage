@@ -1,0 +1,95 @@
+/* ==========================================================================
+   10 — NAV
+   White bar, cursive wordmark left, three links + LOG IN pill right.
+   Optional — delete blocks/01-nav.html if you prefer Kajabi's native header.
+   ========================================================================== */
+
+.sw-scope.sw-nav {
+  background: var(--sw-white);
+  padding-block: 1.1rem;
+}
+.sw-scope.sw-nav .sw-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.sw-scope.sw-nav .sw-nav-logo img {
+  height: clamp(34px, 3.6vw, 52px) !important;
+  width: auto;
+}
+/* The wordmark currently on the Kajabi CDN is the cream-on-dark version,
+   which disappears against this white bar. Until a green wordmark is
+   uploaded and pointed at `brand.logoGreen`, recolour the cream one to
+   --sw-green with a filter chain. Delete this rule once the real green
+   asset is in place. */
+.sw-scope.sw-nav .sw-nav-logo.sw-tint-green img {
+  filter: brightness(0) saturate(100%) invert(34%) sepia(23%) saturate(1032%)
+    hue-rotate(102deg) brightness(93%) contrast(89%);
+}
+.sw-scope.sw-nav .sw-nav-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+.sw-scope.sw-nav .sw-nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2rem);
+}
+.sw-scope.sw-nav .sw-nav-links a {
+  font-weight: 600;
+  font-size: clamp(0.85rem, 1.1vw, 1.02rem) !important;
+  color: var(--sw-text) !important;
+  position: relative;
+  transition: color 0.2s var(--sw-ease);
+}
+.sw-scope.sw-nav .sw-nav-links a:hover {
+  color: var(--sw-green) !important;
+}
+/* Thin vertical rules between links, as in the mockup */
+.sw-scope.sw-nav .sw-nav-links a + a::before {
+  content: "";
+  position: absolute;
+  left: calc(clamp(1rem, 2.2vw, 2rem) / -2);
+  top: 50%;
+  translate: 0 -50%;
+  width: 1px;
+  height: 1.5em;
+  background: var(--sw-text);
+  opacity: 0.55;
+}
+.sw-scope.sw-nav .sw-nav-login {
+  font-family: var(--sw-font-display) !important;
+  font-size: clamp(0.72rem, 0.95vw, 0.88rem) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: skewX(var(--sw-display-skew));
+  color: var(--sw-green) !important;
+  border: 2px solid var(--sw-green);
+  border-radius: 999px;
+  padding: 0.5em 1.4em;
+  transition:
+    background 0.2s var(--sw-ease),
+    color 0.2s var(--sw-ease);
+  white-space: nowrap;
+}
+.sw-scope.sw-nav .sw-nav-login:hover {
+  background: var(--sw-green);
+  color: var(--sw-cream) !important;
+}
+
+/* Mobile: collapse the inline links into a scrollable row */
+@media (max-width: 720px) {
+  .sw-scope.sw-nav .sw-nav-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+  }
+  .sw-scope.sw-nav .sw-nav-links {
+    gap: 1rem;
+  }
+  .sw-scope.sw-nav .sw-nav-links a {
+    font-size: 0.82rem !important;
+  }
+}

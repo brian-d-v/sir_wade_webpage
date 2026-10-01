@@ -1,0 +1,148 @@
+/* ==========================================================================
+   60 — BIO
+   White band. Marker name + green squiggle, gold role line, sketched portrait
+   ring on the left, gold-ring bullet list on the right.
+   ========================================================================== */
+
+.sw-scope.sw-bio {
+  background: var(--sw-white);
+}
+.sw-scope.sw-bio .sw-bio-head {
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
+}
+.sw-scope.sw-bio .sw-h2 {
+  color: var(--sw-green) !important;
+  margin-bottom: 0.25rem;
+}
+.sw-scope.sw-bio .sw-squiggle {
+  color: var(--sw-green-bright);
+  max-width: clamp(240px, 42%, 520px);
+  margin-bottom: 0.6rem;
+}
+.sw-scope.sw-bio .sw-bio-role {
+  font-weight: 700;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  color: var(--sw-gold) !important;
+}
+
+.sw-scope.sw-bio .sw-doodle-youtube {
+  color: var(--sw-gold);
+  width: clamp(130px, 17vw, 240px);
+  top: clamp(2rem, 5vw, 5rem);
+  right: clamp(1rem, 7vw, 7rem);
+}
+/* Tucked under the portrait column so it can't collide with the
+   credential list, which runs the full width of the right column. */
+.sw-scope.sw-bio .sw-doodle-star-sm {
+  color: var(--sw-gold);
+  width: clamp(60px, 7vw, 100px);
+  bottom: clamp(0.5rem, 2vw, 2rem);
+  left: clamp(14rem, 23vw, 24rem);
+}
+
+/* ── Layout ──────────────────────────────────────────────── */
+.sw-scope.sw-bio .sw-bio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+
+/* Portrait with the hand-drawn ring. The ring is an SVG overlay sized to
+   the portrait box, so both scale together. */
+.sw-scope.sw-bio .sw-bio-portrait {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+.sw-scope.sw-bio .sw-bio-portrait img {
+  position: absolute;
+  inset: 9%;
+  width: 82%;
+  height: 82%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid var(--sw-green);
+}
+.sw-scope.sw-bio .sw-bio-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--sw-green);
+  overflow: visible;
+}
+.sw-scope.sw-bio .sw-bio-ring path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+.sw-scope.sw-bio .sw-bio-more {
+  display: block;
+  text-align: center;
+  margin-top: 1.1rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--sw-text) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.sw-scope.sw-bio .sw-bio-more:hover {
+  color: var(--sw-green) !important;
+}
+
+/* ── Credential list ─────────────────────────────────────── */
+.sw-scope.sw-bio .sw-bio-creds {
+  list-style: none;
+  display: grid;
+  gap: clamp(1.1rem, 2vw, 1.75rem);
+  padding-top: clamp(0.5rem, 2vw, 2rem);
+}
+.sw-scope.sw-bio .sw-bio-cred {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: start;
+}
+/* Hollow gold ring bullet */
+.sw-scope.sw-bio .sw-bio-cred::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  margin-top: 0.35em;
+  border-radius: 50%;
+  border: 4px solid var(--sw-gold);
+  flex-shrink: 0;
+}
+.sw-scope.sw-bio .sw-bio-cred p {
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.2vw, 1.08rem) !important;
+  line-height: 1.55;
+  color: var(--sw-text) !important;
+}
+/* Mint marker highlight behind key phrases */
+.sw-scope.sw-bio .sw-mark {
+  background: var(--sw-green-mint);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.05em 0.18em;
+  border-radius: 2px;
+}
+
+@media (max-width: 860px) {
+  .sw-scope.sw-bio .sw-bio-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sw-scope.sw-bio .sw-doodle-youtube,
+  .sw-scope.sw-bio .sw-doodle-star-sm {
+    display: none;
+  }
+  .sw-scope.sw-bio .sw-squiggle {
+    max-width: 85%;
+  }
+}

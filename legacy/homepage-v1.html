@@ -1,0 +1,1666 @@
+<!-- ============================================================
+  STEP 1 OF 2 — PASTE INTO:
+  Website → [Your Page] → Settings → Custom Code → Head
+  (or Site Settings → Custom Code → Head for site-wide)
+============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;500;600;700;800;900&family=Lexend+Deca:wght@300;400;500&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- ============================================================
+  STEP 2 OF 2 — PASTE INTO A CUSTOM CODE BLOCK on your home page.
+  Kajabi editor → Add Block → Custom Code → paste entire contents.
+  Requires Step 1 (fonts) in the Head first.
+  NOTE: The nav and footer sections here are supplemental —
+  Kajabi will render its own nav/footer around this block.
+  You can hide those sections and use these, or delete the
+  .sw-nav and .sw-footer blocks if you prefer Kajabi's own.
+============================================================ -->
+
+<style>
+  /* ── SCOPE: all rules locked to #sw-home ───────────────────────────────
+   Prevents Kajabi theme styles from bleeding in.
+   CSS variables replaced with literal hex values throughout.
+   !important used on font, color, and size rules that Kajabi overrides. */
+
+  #sw-home {
+    font-family: "Lexend Deca", sans-serif !important;
+    font-weight: 400;
+    color: #1a2a1f;
+    background: #faf4e8;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  #sw-home *,
+  #sw-home *::before,
+  #sw-home *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  #sw-home .sw-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 2.5rem;
+    background: rgba(20, 31, 24, 0.97);
+    border-bottom: 1px solid rgba(243, 232, 211, 0.07);
+  }
+  #sw-home .sw-nav-logo img {
+    height: 34px !important;
+    display: block;
+  }
+  #sw-home .sw-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  #sw-home .sw-nav-links a {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.73rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(243, 232, 211, 0.6) !important;
+    text-decoration: none !important;
+    transition: color 0.2s;
+  }
+  #sw-home .sw-nav-links a:hover {
+    color: #f3e8d3 !important;
+  }
+  #sw-home .sw-nav-cta {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #366d53 !important;
+    color: #f3e8d3 !important;
+    padding: 0.5rem 1.2rem !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: none !important;
+  }
+  #sw-home .sw-nav-cta:hover {
+    background: #4a8f6b !important;
+    color: #f3e8d3 !important;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────── */
+  #sw-home .sw-hero {
+    background: #141f18;
+    position: relative;
+    overflow: hidden;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+  }
+  #sw-home .sw-hero-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(20, 31, 24, 1) 0%,
+      rgba(20, 31, 24, 0.85) 40%,
+      rgba(20, 31, 24, 0.3) 70%,
+      rgba(20, 31, 24, 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  #sw-home .sw-hero-media-layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  #sw-home .sw-hero-media-layer img,
+  #sw-home .sw-hero-media-layer video,
+  #sw-home .sw-hero-media-layer iframe {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    border: none !important;
+    opacity: 0.5;
+  }
+  #sw-home .sw-hero-media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    background: linear-gradient(
+      135deg,
+      rgba(54, 109, 83, 0.18) 0%,
+      rgba(20, 31, 24, 0.4) 100%
+    );
+    color: rgba(243, 232, 211, 0.2);
+    text-align: center;
+    padding: 2rem;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-left: 1px dashed rgba(54, 109, 83, 0.25);
+  }
+  #sw-home .sw-hero-media-placeholder .pm-icon {
+    font-size: 2.5rem;
+    opacity: 0.35;
+  }
+  #sw-home .sw-hero-media-placeholder .pm-text {
+    opacity: 0.45;
+    line-height: 1.6;
+    max-width: 22ch;
+  }
+  #sw-home .sw-hero-inner {
+    flex: 1;
+    padding: 2.25rem 2.5rem 0;
+    position: relative;
+    z-index: 2;
+    max-width: 58%;
+  }
+  #sw-home .sw-hero-eyebrow {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #4a8f6b !important;
+    margin-bottom: 1rem;
+    animation: swFadeUp 0.6s ease both 0.05s;
+  }
+  #sw-home .sw-hero-eyebrow span {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: #4a8f6b;
+    border-radius: 2px;
+  }
+  #sw-home .sw-hero-title {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(2.2rem, 4vw, 4rem) !important;
+    line-height: 0.95 !important;
+    color: #f3e8d3 !important;
+    animation: swFadeUp 0.6s ease both 0.15s;
+    margin-bottom: 1rem !important;
+  }
+  #sw-home .sw-hero-title em {
+    font-style: italic !important;
+    color: #4a8f6b !important;
+  }
+  #sw-home .sw-hero-sub {
+    font-size: 0.88rem !important;
+    font-weight: 300 !important;
+    color: rgba(243, 232, 211, 0.55) !important;
+    max-width: 44ch;
+    line-height: 1.7 !important;
+    margin-bottom: 1.35rem;
+    animation: swFadeUp 0.6s ease both 0.25s;
+  }
+  #sw-home .sw-hero-sub strong {
+    color: #f3e8d3 !important;
+    font-weight: 500 !important;
+  }
+  #sw-home .sw-hero-btns {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    animation: swFadeUp 0.6s ease both 0.35s;
+  }
+  #sw-home .sw-btn-primary {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    background: #366d53 !important;
+    color: #f3e8d3 !important;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.75rem !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    transition: all 0.2s;
+    border: none !important;
+  }
+  #sw-home .sw-btn-primary:hover {
+    background: #4a8f6b !important;
+    color: #f3e8d3 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(54, 109, 83, 0.35);
+  }
+  /* Enrollment strip */
+  #sw-home .sw-hero-strip {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(243, 232, 211, 0.07);
+    margin-top: 2.5rem;
+  }
+  #sw-home .sw-hs-cell {
+    flex: 1;
+    min-width: 190px;
+    padding: 1.25rem 2rem;
+    border-right: 1px solid rgba(243, 232, 211, 0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  #sw-home .sw-hs-cell:last-child {
+    border-right: none;
+  }
+  #sw-home .sw-hs-label {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.56rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(243, 232, 211, 0.28) !important;
+  }
+  #sw-home .sw-hs-val {
+    font-family: "Nunito", sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    color: #f3e8d3 !important;
+    line-height: 1.25;
+  }
+  #sw-home .sw-hs-sub {
+    font-size: 0.7rem !important;
+    color: rgba(243, 232, 211, 0.36) !important;
+  }
+  #sw-home .sw-hs-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+  }
+  #sw-home .sw-hs-pill {
+    display: inline-block;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.55rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.6rem;
+    border-radius: 2rem;
+  }
+  #sw-home .sw-pill-live {
+    background: rgba(62, 178, 70, 0.18);
+    color: #3eb246;
+  }
+  #sw-home .sw-pill-open {
+    background: rgba(54, 109, 83, 0.18);
+    color: #5ab87a;
+  }
+
+  /* ── SHARED ───────────────────────────────────────── */
+  #sw-home .sw-eyebrow {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.63rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #366d53 !important;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  #sw-home .sw-eyebrow-lt {
+    color: rgba(243, 232, 211, 0.45) !important;
+  }
+  #sw-home .sw-eyebrow-dk {
+    color: rgba(243, 232, 211, 0.5) !important;
+  }
+  #sw-home .sw-section-title {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem) !important;
+    color: #1a2a1f !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.25rem;
+  }
+  #sw-home .sw-section-title.light {
+    color: #f3e8d3 !important;
+  }
+
+  /* ── ABOUT / MISSION ──────────────────────────────── */
+  #sw-home .sw-about {
+    background: #f3e8d3;
+    padding: 6rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    border-bottom: 2px solid rgba(54, 109, 83, 0.18);
+  }
+  #sw-home .sw-about-body {
+    font-size: 0.97rem !important;
+    line-height: 1.82 !important;
+    color: #5a6e5e !important;
+  }
+  #sw-home .sw-about-body strong {
+    color: #1a2a1f !important;
+    font-weight: 600 !important;
+  }
+  #sw-home .sw-about-body p + p {
+    margin-top: 1rem;
+  }
+  #sw-home .sw-about-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border: 2px solid rgba(54, 109, 83, 0.28);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  #sw-home .sw-astat {
+    padding: 1.75rem 2rem;
+    background: #ffffff;
+    border-bottom: 2px solid rgba(54, 109, 83, 0.18);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: background 0.2s;
+  }
+  #sw-home .sw-astat:last-child {
+    border-bottom: none;
+  }
+  #sw-home .sw-astat:hover {
+    background: #ebf3ee;
+  }
+  #sw-home .sw-astat-num {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: 2.6rem !important;
+    color: #366d53 !important;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 5.5rem;
+    text-align: center;
+  }
+  #sw-home .sw-astat-info strong {
+    font-family: "Nunito", sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 0.88rem !important;
+    color: #1a2a1f !important;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+  #sw-home .sw-astat-info span {
+    font-size: 0.77rem !important;
+    color: #5a6e5e !important;
+  }
+
+  /* ── COURSES ──────────────────────────────────────── */
+  #sw-home .sw-courses {
+    background: #ffffff;
+    padding: 6rem 2.5rem;
+  }
+  #sw-home .sw-courses-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  #sw-home .sw-view-all {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #366d53 !important;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 2px solid rgba(54, 109, 83, 0.3);
+    padding-bottom: 0.15rem;
+    transition: border-color 0.2s;
+  }
+  #sw-home .sw-view-all:hover {
+    border-color: #366d53;
+  }
+  #sw-home .sw-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  #sw-home .sw-course-card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid rgba(54, 109, 83, 0.18);
+    background: #faf4e8;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s,
+      border-color 0.3s;
+  }
+  #sw-home .sw-course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(54, 109, 83, 0.13);
+    border-color: #366d53;
+  }
+  #sw-home .sw-course-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block !important;
+    background: #ead9be;
+  }
+  #sw-home .sw-course-body {
+    padding: 1.6rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  #sw-home .sw-course-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  #sw-home .sw-course-tag {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.57rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 2rem;
+  }
+  #sw-home .sw-tag-neutral {
+    background: rgba(90, 110, 84, 0.1);
+    color: #5a6e5e;
+  }
+  #sw-home .sw-tag-enroll {
+    background: rgba(54, 109, 83, 0.15);
+    color: #366d53;
+    font-weight: 900 !important;
+  }
+  #sw-home .sw-tag-open {
+    background: rgba(54, 109, 83, 0.12);
+    color: #366d53;
+  }
+  #sw-home .sw-course-name {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem) !important;
+    color: #1a2a1f !important;
+    line-height: 1.15;
+  }
+  #sw-home .sw-course-desc {
+    font-size: 0.81rem !important;
+    line-height: 1.65 !important;
+    color: #5a6e5e !important;
+    flex: 1;
+  }
+  #sw-home .sw-course-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 2px solid rgba(54, 109, 83, 0.18);
+    margin-top: auto;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  #sw-home .sw-course-price {
+    font-family: "Nunito", sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 0.98rem !important;
+    color: #1a2a1f !important;
+  }
+  #sw-home .sw-course-price .from {
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    color: #5a6e5e !important;
+    margin-right: 0.2rem;
+  }
+  #sw-home .sw-course-link {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #366d53 !important;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: gap 0.2s;
+    white-space: nowrap;
+  }
+  #sw-home .sw-course-link:hover {
+    gap: 0.6rem;
+    color: #366d53 !important;
+  }
+
+  /* ── INSTRUCTOR ───────────────────────────────────── */
+  #sw-home .sw-instructor {
+    background: #141f18;
+    color: #f3e8d3;
+    padding: 4.5rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: start;
+    border-top: 4px solid #366d53;
+  }
+  #sw-home .sw-instr-img-wrap {
+    position: sticky;
+    top: 5rem;
+  }
+  #sw-home .sw-instr-visual {
+    width: 100%;
+    border-radius: 14px;
+    background: linear-gradient(160deg, #1f3528 0%, #0e1f14 100%);
+    border: 2px solid rgba(54, 109, 83, 0.3);
+    aspect-ratio: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #sw-home .sw-instr-visual img {
+    width: 100% !important;
+    opacity: 1;
+    display: block !important;
+  }
+  #sw-home .sw-instr-name {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(2rem, 4vw, 3.2rem) !important;
+    color: #f3e8d3 !important;
+    line-height: 0.95;
+    margin-bottom: 0.3rem;
+  }
+  #sw-home .sw-instr-subtitle {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4a8f6b !important;
+    margin-bottom: 1.75rem;
+    display: block;
+  }
+  #sw-home .sw-instr-body {
+    font-size: 0.93rem !important;
+    line-height: 1.78 !important;
+    color: rgba(243, 232, 211, 0.6) !important;
+    margin-bottom: 1.5rem;
+  }
+  #sw-home .sw-instr-body strong {
+    color: #f3e8d3 !important;
+    font-weight: 600 !important;
+  }
+  #sw-home .sw-instr-creds {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #sw-home .sw-instr-cred {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 0.9rem 1.1rem;
+    background: rgba(243, 232, 211, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(243, 232, 211, 0.08);
+    transition: background 0.2s;
+  }
+  #sw-home .sw-instr-cred:hover {
+    background: rgba(243, 232, 211, 0.09);
+  }
+  #sw-home .sw-cred-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    line-height: 1;
+  }
+  #sw-home .sw-cred-text {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+    color: rgba(243, 232, 211, 0.58) !important;
+  }
+  #sw-home .sw-cred-text strong {
+    color: #f3e8d3 !important;
+    font-weight: 700 !important;
+    display: block;
+    margin-bottom: 0.12rem;
+  }
+
+  /* ── TESTIMONIALS ─────────────────────────────────── */
+  #sw-home .sw-testimonials {
+    background: #f3e8d3;
+    padding: 6rem 2.5rem;
+  }
+  #sw-home .sw-test-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .test-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .faq-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  #sw-home .sw-slider-wrap {
+    border-radius: 14px;
+    border: 2px solid rgba(54, 109, 83, 0.28);
+    overflow: hidden;
+  }
+  #sw-home .sw-slider-track-outer {
+    overflow: hidden;
+  }
+  #sw-home .sw-slider-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #sw-home .sw-slide {
+    min-width: 100%;
+    padding: 2.75rem 3.25rem;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+  #sw-home .sw-slide-stars {
+    color: #366d53;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.12em;
+  }
+  #sw-home .sw-slide-quote {
+    font-family: "DM Serif Display", serif !important;
+    font-style: italic !important;
+    font-size: clamp(1rem, 1.8vw, 1.25rem) !important;
+    line-height: 1.65 !important;
+    color: #1a2a1f !important;
+  }
+  #sw-home .sw-slide-attr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  #sw-home .sw-slide-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #366d53;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  #sw-home .sw-slide-avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
+  #sw-home .sw-slide-avatar span {
+    font-family: "Nunito", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 0.8rem !important;
+    color: #f3e8d3 !important;
+  }
+  #sw-home .sw-slide-name {
+    font-family: "Nunito", sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 0.86rem !important;
+    color: #1a2a1f !important;
+  }
+  #sw-home .sw-slide-ctx {
+    font-size: 0.73rem !important;
+    color: #5a6e5e !important;
+    margin-top: 0.1rem;
+  }
+  #sw-home .sw-slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+  #sw-home .sw-slider-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+  #sw-home .sw-sdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(54, 109, 83, 0.2);
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+    border: none;
+    padding: 0;
+  }
+  #sw-home .sw-sdot.active {
+    background: #366d53;
+    transform: scale(1.3);
+  }
+  #sw-home .sw-slider-arrows {
+    display: flex;
+    gap: 0.5rem;
+  }
+  #sw-home .sw-sarrow {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 2px solid rgba(54, 109, 83, 0.18);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem !important;
+    color: #366d53 !important;
+    transition: all 0.2s;
+    line-height: 1;
+  }
+  #sw-home .sw-sarrow:hover {
+    background: #366d53 !important;
+    color: #f3e8d3 !important;
+    border-color: #366d53;
+  }
+
+  /* ── UPCOMING ─────────────────────────────────────── */
+  #sw-home .sw-upcoming {
+    background: #366d53;
+    padding: 6rem 2.5rem;
+  }
+  #sw-home .sw-upcoming-header {
+    margin-bottom: 3rem;
+  }
+  #sw-home .sw-upcoming-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  #sw-home .sw-uc-card {
+    background: rgba(243, 232, 211, 0.07);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px solid rgba(243, 232, 211, 0.14);
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+  #sw-home .sw-uc-card:hover {
+    background: rgba(243, 232, 211, 0.12);
+    transform: translateY(-3px);
+  }
+  #sw-home .sw-uc-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.85rem;
+  }
+  #sw-home .sw-uc-tag {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.58rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(243, 232, 211, 0.45) !important;
+    margin-bottom: 0.45rem;
+    display: block;
+  }
+  #sw-home .sw-uc-name {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: 1.25rem !important;
+    color: #f3e8d3 !important;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  #sw-home .sw-uc-desc {
+    font-size: 0.83rem !important;
+    line-height: 1.62 !important;
+    color: rgba(243, 232, 211, 0.58) !important;
+  }
+  #sw-home .sw-uc-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.1rem;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f3e8d3 !important;
+    text-decoration: none !important;
+    opacity: 0.65;
+    transition:
+      opacity 0.2s,
+      gap 0.2s;
+  }
+  #sw-home .sw-uc-link:hover {
+    opacity: 1;
+    gap: 0.6rem;
+    color: #f3e8d3 !important;
+  }
+
+  /* ── EMAIL CTA ────────────────────────────────────── */
+  #sw-home .sw-email-cta {
+    background: #f3e8d3;
+    padding: 5rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    border-top: 2px solid rgba(54, 109, 83, 0.18);
+  }
+  #sw-home .sw-email-title {
+    font-family: "DM Serif Display", serif !important;
+    font-weight: 400 !important;
+    font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
+    color: #1a2a1f !important;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  #sw-home .sw-email-title em {
+    font-style: italic !important;
+    color: #366d53 !important;
+  }
+  #sw-home .sw-email-body {
+    font-size: 0.93rem !important;
+    line-height: 1.78 !important;
+    color: #5a6e5e !important;
+  }
+  #sw-home .sw-email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  #sw-home .sw-email-form input[type="email"] {
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    border: 2px solid rgba(54, 109, 83, 0.28);
+    border-radius: 8px;
+    font-family: "Lexend Deca", sans-serif !important;
+    font-size: 0.88rem !important;
+    background: #ffffff !important;
+    color: #1a2a1f !important;
+    outline: none;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  #sw-home .sw-email-form input[type="email"]:focus {
+    border-color: #366d53 !important;
+    box-shadow: 0 0 0 3px rgba(54, 109, 83, 0.12);
+  }
+  #sw-home .sw-email-form input::placeholder {
+    color: #5a6e5e !important;
+  }
+  #sw-home .sw-email-submit {
+    background: #366d53 !important;
+    color: #f3e8d3 !important;
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.95rem 2rem !important;
+    border-radius: 50px !important;
+    border: none !important;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  #sw-home .sw-email-submit:hover {
+    background: #284f3c !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(54, 109, 83, 0.3);
+  }
+  #sw-home .sw-email-note {
+    font-size: 0.73rem !important;
+    color: #5a6e5e !important;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  #sw-home .sw-footer {
+    background: #141f18;
+    color: #f3e8d3;
+    padding: 3rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-top: 3px solid #366d53;
+  }
+  #sw-home .sw-footer-logo img {
+    height: 38px !important;
+    display: block;
+    opacity: 0.8;
+  }
+  #sw-home .sw-footer-links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  #sw-home .sw-footer-links a {
+    font-family: "Nunito", sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(243, 232, 211, 0.45) !important;
+    text-decoration: none !important;
+    transition: color 0.2s;
+  }
+  #sw-home .sw-footer-links a:hover {
+    color: #f3e8d3 !important;
+  }
+  #sw-home .sw-footer-copy {
+    font-size: 0.68rem !important;
+    color: rgba(243, 232, 211, 0.28) !important;
+    font-family: "Nunito", sans-serif !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATION ────────────────────────────────────── */
+  @keyframes swFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 1100px) {
+    #sw-home .sw-courses-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    #sw-home .sw-upcoming-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 768px) {
+    #sw-home .sw-nav-links {
+      display: none;
+    }
+    #sw-home .sw-hero-inner {
+      max-width: 100%;
+      padding: 3rem 1.5rem 0;
+    }
+    #sw-home .sw-hero-media-layer {
+      width: 100%;
+      opacity: 0.3;
+    }
+    #sw-home .sw-hero-glow {
+      background: linear-gradient(
+        180deg,
+        rgba(20, 31, 24, 0.85) 0%,
+        rgba(20, 31, 24, 0.5) 100%
+      );
+    }
+    #sw-home .sw-about,
+    #sw-home .sw-instructor,
+    #sw-home .sw-email-cta {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    #sw-home .sw-courses-grid {
+      grid-template-columns: 1fr;
+    }
+    #sw-home .sw-slide {
+      padding: 2rem;
+    }
+    #sw-home .sw-hs-cell {
+      min-width: 48%;
+      border-right: none;
+      border-bottom: 1px solid rgba(243, 232, 211, 0.07);
+    }
+    #sw-home .sw-hs-cell:last-child {
+      border-bottom: none;
+    }
+    #sw-home .sw-instr-img-wrap {
+      position: static;
+    }
+  }
+</style>
+
+<!-- ════════════════════════════════════════════════════════════
+  PAGE CONTENT
+  All classes prefixed sw- to avoid Kajabi collisions.
+  NOTE: Kajabi will render its own nav/footer around this block.
+  The .sw-nav and .sw-footer below are included for completeness —
+  delete them if you prefer Kajabi's native nav/footer instead.
+════════════════════════════════════════════════════════════ -->
+<div id="sw-home">
+  <!-- HERO -->
+  <section class="sw-hero">
+    <div class="sw-hero-glow"></div>
+    <div class="sw-hero-media-layer" id="swHeroMedia">
+      <!--
+      TO ADD YOUR MEDIA — replace the placeholder div below with:
+      • Image:  <img src="YOUR-IMAGE-URL" alt="Sir Wade Animation" />
+      • Video:  <video src="YOUR-VIDEO-URL" autoplay muted loop playsinline></video>
+      • Embed:  <iframe src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID" allow="autoplay" allowfullscreen></iframe>
+    
+    <div class="sw-hero-media-placeholder">
+      <div class="pm-icon">🎬</div>
+      <div class="pm-text">Add your image or video here — see the HTML comment above</div>
+    </div>
+-->
+      <img
+        src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2166669474/settings_images/2ace3d1-83f-ca6c-44a-8320efd6d66_c12eba93-b43a-414e-97c2-cfa1c4a48097.jpg"
+        height:60%
+        alt="Sir Wade Animation"
+      />
+    </div>
+    <div class="sw-hero-inner">
+      <div class="sw-hero-eyebrow">
+        <span></span>Studio-Level Training · Indie Budgets
+      </div>
+      <h1 class="sw-hero-title">
+        Animate<br /><em>Better.</em><br />
+        Starting Now.
+      </h1>
+      <p class="sw-hero-sub">
+        Live workshops and structured courses covering
+        <strong>character animation, Maya, Unreal Engine, and beyond</strong> —
+        taught by an educator trusted by studios worldwide.
+      </p>
+      <div class="sw-hero-btns">
+        <a href="#sw-courses" class="sw-btn-primary">Explore All Classes →</a>
+      </div>
+    </div>
+    <div class="sw-hero-strip">
+      <div class="sw-hs-cell">
+        <div class="sw-hs-label">Self-Paced</div>
+        <div class="sw-hs-val">Maya for Animators</div>
+        <div class="sw-hs-sub">Start any time</div>
+        <div class="sw-hs-tags">
+          <span class="sw-hs-pill sw-pill-open">Always Open</span>
+        </div>
+      </div>
+      <div class="sw-hs-cell">
+        <div class="sw-hs-label">Summer 2026</div>
+        <div class="sw-hs-val">Animation Summer Camp</div>
+        <div class="sw-hs-sub">July 1 – September 4</div>
+        <div class="sw-hs-tags">
+          <span class="sw-hs-pill sw-pill-live">Enrolling Now</span>
+        </div>
+      </div>
+      <div class="sw-hs-cell">
+        <div class="sw-hs-label">Summer 2026</div>
+        <div class="sw-hs-val">Summer of Unreal</div>
+        <div class="sw-hs-sub">July 6 – July 31</div>
+        <div class="sw-hs-tags">
+          <span class="sw-hs-pill sw-pill-live">Enrolling Now</span>
+        </div>
+      </div>
+      <div class="sw-hs-cell">
+        <div class="sw-hs-label">Self-Paced</div>
+        <div class="sw-hs-val">Animation Basics &amp; Fundamentals</div>
+        <div class="sw-hs-sub">Start any time</div>
+        <div class="sw-hs-tags">
+          <span class="sw-hs-pill sw-pill-open">Always Open</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="sw-about">
+    <div>
+      <span class="sw-eyebrow">The Mission</span>
+      <h2 class="sw-section-title">
+        Studio Training.<br />Without the studio price tag.
+      </h2>
+      <div class="sw-about-body">
+        <p>
+          These courses exist because great animation education shouldn't
+          require an expensive degree or an industry connection. Whether you're
+          a student trying to break in, a professional leveling up, or an
+          independent artist creating your own projects, there's something here
+          for you.
+        </p>
+        <p>
+          Every class is built around
+          <strong>practical, production-level knowledge</strong> . Understand
+          the "why" behind every "what."
+        </p>
+      </div>
+    </div>
+    <div class="sw-about-stats">
+      <div class="sw-astat">
+        <div class="sw-astat-num">6K+</div>
+        <div class="sw-astat-info">
+          <strong>Animators Trained</strong
+          ><span>Across live workshops and self-paced courses</span>
+        </div>
+      </div>
+      <div class="sw-astat">
+        <div class="sw-astat-num">3</div>
+        <div class="sw-astat-info">
+          <strong>Software Platforms</strong
+          ><span>Maya, Blender, and Unreal Engine are all supported</span>
+        </div>
+      </div>
+      <div class="sw-astat">
+        <div class="sw-astat-num">Live</div>
+        <div class="sw-astat-info">
+          <strong>Real-Time Instruction</strong
+          ><span
+            >Ask questions, get feedback, learn alongside other artists</span
+          >
+        </div>
+      </div>
+      <div class="sw-astat">
+        <div class="sw-astat-num">∞</div>
+        <div class="sw-astat-info">
+          <strong>Recordings Kept Forever</strong
+          ><span>Every live session recorded and searchable&nbsp;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section class="sw-courses" id="sw-courses">
+    <div class="sw-courses-header">
+      <div>
+        <span class="sw-eyebrow">Current Classes</span>
+        <h2 class="sw-section-title" style="margin-bottom: 0">
+          What's Available Right Now
+        </h2>
+      </div>
+      <a class="sw-view-all" href="https://courses.sirwade.com/store"
+        >View All Classes →</a
+      >
+    </div>
+    <div class="sw-courses-grid">
+      <div class="sw-course-card">
+        <a href="https://courses.sirwade.com/animation-summer-camp">
+          <img
+            class="sw-course-thumb"
+            src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2166669474/settings_images/f6b1d8f-536d-ae7-5150-73ad053768_73f4cd17-0ddd-43ae-81ce-c5a401f84924.jpg"
+            alt="Animation Summer Camp"
+          />
+        </a>
+        <div class="sw-course-body">
+          <div class="sw-course-meta">
+            <span class="sw-course-tag sw-tag-neutral">Live Workshop</span
+            ><span class="sw-course-tag sw-tag-enroll">Enrolling Now</span>
+          </div>
+          <div class="sw-course-name">Animation Summer Camp</div>
+          <div class="sw-course-desc">
+            Body Mechanics + Acting &amp; Performance. 10 weeks of live feedback
+            sessions. <strong>July 1st - September 4th</strong>
+          </div>
+          <div class="sw-course-footer">
+            <div class="sw-course-price">
+              <span class="from">from</span>$349
+            </div>
+            <a
+              class="sw-course-link"
+              href="https://courses.sirwade.com/animation-summer-camp"
+              >Explore →</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="sw-course-card">
+        <a href="https://courses.sirwade.com/unrealsummer">
+          <img
+            class="sw-course-thumb"
+            src="https://media.fab.com/image_previews/gallery_images/de07d304-8f7f-4219-aa46-08287fa2baaa/919fb3a3-1552-483a-96b0-bcb821146580.jpg"
+            alt="Summer of Unreal"
+          />
+        </a>
+        <div class="sw-course-body">
+          <div class="sw-course-meta">
+            <span class="sw-course-tag sw-tag-neutral">Live Workshop</span
+            ><span class="sw-course-tag sw-tag-enroll">Enrolling Now</span>
+          </div>
+          <div class="sw-course-name">Summer of Unreal</div>
+          <div class="sw-course-desc">
+            Character animation and cinematic production in Unreal Engine
+            5.8.<br />
+            2 courses, 4 weeks. <strong>July 6th – 31st</strong>
+          </div>
+          <div class="sw-course-footer">
+            <div class="sw-course-price">
+              <span class="from">from</span>$499
+            </div>
+            <a
+              class="sw-course-link"
+              href="https://courses.sirwade.com/unrealsummer"
+              >Explore →</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="sw-course-card">
+        <a href="https://courses.sirwade.com/maya-for-animators-2023">
+          <img
+            class="sw-course-thumb"
+            src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/8cd874-107-acb-a6fd-801d1fa8113_60f2c02c-5e2c-4c25-a9f2-f08033e10982.jpg"
+            alt="Maya for Animators"
+          />
+        </a>
+        <div class="sw-course-body">
+          <div class="sw-course-meta">
+            <span class="sw-course-tag sw-tag-neutral">Self-Paced</span
+            ><span class="sw-course-tag sw-tag-open">Always Open</span>
+          </div>
+          <div class="sw-course-name">Maya for Animators Workshop</div>
+          <div class="sw-course-desc">
+            The full Maya production pipeline for animators. Every animation
+            feature you'd need for any shot, all based on industry techniques.
+          </div>
+          <div class="sw-course-footer">
+            <div class="sw-course-price">Enroll Today</div>
+            <a
+              class="sw-course-link"
+              href="https://courses.sirwade.com/maya-for-animators-2023"
+              >Start Learning →</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="sw-course-card">
+        <a href="http://courses.sirwade.com/animation-basics">
+          <img
+            class="sw-course-thumb"
+            src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/830c26e-25a-6ceb-ca0e-b65ae7b311a_Fundamentals.png"
+            alt="Animation Basics &amp; Fundamentals"
+          />
+        </a>
+        <div class="sw-course-body">
+          <div class="sw-course-meta">
+            <span class="sw-course-tag sw-tag-neutral">Self-Paced</span
+            ><span class="sw-course-tag sw-tag-open">Always Open</span>
+          </div>
+          <div class="sw-course-name">Animation Basics &amp; Fundamentals</div>
+          <div class="sw-course-desc">
+            The foundation every animator needs. Core principles, movement
+            theory, and the basics that make everything click.
+          </div>
+          <div class="sw-course-footer">
+            <div class="sw-course-price">Enroll Today</div>
+            <a
+              class="sw-course-link"
+              href="http://courses.sirwade.com/animation-basics"
+              >Start Learning →</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUCTOR -->
+  <section class="sw-instructor">
+    <div class="sw-instr-img-wrap">
+      <div class="sw-instr-visual">
+        <img
+          src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/sites/2147638896/images/4a11cb-f6e-77ab-31d-85630f7caf5d_SW-ProfilePic2022.jpg"
+          alt="Sir Wade"
+        />
+      </div>
+    </div>
+    <div class="sw-instr-right">
+      <span class="sw-eyebrow sw-eyebrow-lt">Your Instructor</span>
+      <h2 class="sw-instr-name">Sir Wade Neistadt</h2>
+      <span class="sw-instr-subtitle">Character Animator &amp; Educator</span>
+      <p class="sw-instr-body">
+        Built on <strong>real production experience</strong>, Sir Wade has
+        trained artists from DreamWorks, Pixar, Disney, Sony Pictures, Epic
+        Games, ILM, and more. Every class reflects the demands of our industry.
+      </p>
+      <div class="sw-instr-creds">
+        <div class="sw-instr-cred">
+          <div class="sw-cred-icon">🎮</div>
+          <div class="sw-cred-text">
+            <strong>Epic Games UE Animation Fellowship</strong>Instructor and
+            official course creator: one of a handful of educators selected to
+            shape how the industry learns Unreal Engine.
+          </div>
+        </div>
+        <div class="sw-instr-cred">
+          <div class="sw-cred-icon">🎤</div>
+          <div class="sw-cred-text">
+            <strong>Animation Conference Speaker</strong>Presentations, labs,
+            and talks at Unreal Fest, LightBox Expo, SIGGRAPH, and Autodesk
+            University.
+          </div>
+        </div>
+        <div class="sw-instr-cred">
+          <div class="sw-cred-icon">
+            <svg
+              width="20"
+              height="14"
+              viewBox="0 0 20 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="display: block; margin-top: 0.1rem"
+            >
+              <rect width="20" height="14" rx="3" fill="#FF0000" />
+              <path d="M8 4.5L13.5 7L8 9.5V4.5Z" fill="white" />
+            </svg>
+          </div>
+          <div class="sw-cred-text">
+            <strong>YouTube Educator</strong>Free tutorials and animation
+            breakdowns trusted by artists at every level, from students to
+            studio professionals.
+          </div>
+        </div>
+        <div class="sw-instr-cred">
+          <div class="sw-cred-icon">🏫</div>
+          <div class="sw-cred-text">
+            <strong>Studio Training</strong>Years of professional training
+            experience for studio pipelines at the industry level.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sw-testimonials">
+    <div class="sw-test-header">
+      <span class="sw-eyebrow">Student Reviews</span>
+      <h2 class="sw-section-title">Hear from Past Students</h2>
+    </div>
+    <div class="sw-slider-wrap">
+      <div class="sw-slider-track-outer">
+        <div class="sw-slider-track" id="swSliderTrack">
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "I have to say that this is the best workshop I've ever taken for
+              animation. If you are new to Maya or if you're a 7-year veteran
+              like I am, you will have plenty to learn either way."
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar">
+                <img
+                  src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/110d0c-dfae-0eb1-fc77-80b748e13c0a_2ff1a14b-0aac-42a1-a838-912000cbeccd.png"
+                  alt=""
+                />
+              </div>
+              <div>
+                <div class="sw-slide-name">Ariana Alexander</div>
+                <div class="sw-slide-ctx">Maya for Animators</div>
+              </div>
+            </div>
+          </div>
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "This workshop taught me more about Maya animation than the 3
+              years of university that I already wasted before this class.
+              Forget school — if you take everything Sir Wade says to heart,
+              you'll be better off."
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar">
+                <img
+                  src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/5421801-c783-0e66-4ee0-cfa0f72a468c_2ff1a14b-0aac-42a1-a838-912000cbeccd.png"
+                  alt=""
+                />
+              </div>
+              <div>
+                <div class="sw-slide-name">Carlos Vazquez</div>
+                <div class="sw-slide-ctx">Maya for Animators</div>
+              </div>
+            </div>
+          </div>
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "Absolutely packed with tricks and demos. This gave me SO many
+              answers to questions I didn't even know I had. It's the workshop
+              we all need!"
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar">
+                <img
+                  src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/57a32c3-220-a5e3-6c08-5cf1b6b78a_2ff1a14b-0aac-42a1-a838-912000cbeccd.png"
+                  alt=""
+                />
+              </div>
+              <div>
+                <div class="sw-slide-name">Charlotte Taylor</div>
+                <div class="sw-slide-ctx">Maya for Animators</div>
+              </div>
+            </div>
+          </div>
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "I learned more in a week than I did in 4 years. Examples on
+              different topics, insights on how it applies in real life when
+              working with a rig or for a studio — genuinely great teaching."
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar">
+                <img
+                  src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/43216d-6620-e345-2ddb-52ee210aba0b_3ec6c010-1f22-4850-a528-391f6a79da09.png"
+                  alt=""
+                />
+              </div>
+              <div>
+                <div class="sw-slide-name">Sarthak Khurana</div>
+                <div class="sw-slide-ctx">Maya for Animators</div>
+              </div>
+            </div>
+          </div>
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "Fantastic! Sir has put a great deal of effort into creating this
+              course, and it shows. His distinctive, friendly teaching style
+              makes this thoroughly informative course very enjoyable."
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar"><span>KY</span></div>
+              <div>
+                <div class="sw-slide-name">Kirsten Yamaguchi</div>
+                <div class="sw-slide-ctx">Animating in Unreal Engine 5.5</div>
+              </div>
+            </div>
+          </div>
+          <div class="sw-slide">
+            <div class="sw-slide-stars">★★★★★</div>
+            <div class="sw-slide-quote">
+              "I had been feeling stuck in an animation rut, but this helped
+              energize me and give me new ideas that make me want to get back
+              into it regularly again."
+            </div>
+            <div class="sw-slide-attr">
+              <div class="sw-slide-avatar">
+                <img
+                  src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/72b0f-f310-e42d-ebfb-2fe43c826b0_2ff1a14b-0aac-42a1-a838-912000cbeccd.png"
+                  alt=""
+                />
+              </div>
+              <div>
+                <div class="sw-slide-name">Amanda Burley</div>
+                <div class="sw-slide-ctx">Animation Workshop</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-slider-controls">
+      <div class="sw-slider-dots" id="swSliderDots"></div>
+      <div class="sw-slider-arrows">
+        <button class="sw-sarrow" id="swPrevBtn">←</button>
+        <button class="sw-sarrow" id="swNextBtn">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING -->
+  <section class="sw-upcoming" id="sw-upcoming">
+    <div class="sw-upcoming-header">
+      <span class="sw-eyebrow sw-eyebrow-dk">Coming Soon</span>
+      <h2 class="sw-section-title light">More in The Works</h2>
+    </div>
+    <div class="sw-upcoming-grid">
+      <div class="sw-uc-card">
+        <div class="sw-uc-icon">🎬</div>
+        <span class="sw-uc-tag">Coming Soon</span>
+        <div class="sw-uc-name">More Animation Classes</div>
+        <div class="sw-uc-desc">
+          New courses on acting, performance, body mechanics, and advanced
+          animation topics are in development. Sign up below to be notified
+          first.
+        </div>
+        <a class="sw-uc-link" href="#sw-email-cta">Get Notified →</a>
+      </div>
+      <div class="sw-uc-card">
+        <div class="sw-uc-icon">🐵</div>
+        <span class="sw-uc-tag">Coming Soon</span>
+        <div class="sw-uc-name">Blender for Animators</div>
+        <div class="sw-uc-desc">
+          The free and open-source powerhouse — taught with the same
+          animator-first approach as the Maya workshop.
+        </div>
+        <a class="sw-uc-link" href="https://bit.ly/b3dworkshoplist"
+          >Join the Waitlist →</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL CTA -->
+  <section class="sw-email-cta" id="sw-email-cta">
+    <div>
+      <span class="sw-eyebrow">Stay in the Loop</span>
+      <h2 class="sw-email-title">
+        New workshops and resources, <em>delivered to your inbox.</em>
+      </h2>
+      <p class="sw-email-body">
+        Be the first to know when new courses launch, live workshops open for
+        enrollment, or free resources drop.
+      </p>
+    </div>
+    <!--
+  <div> 
+    <div class="sw-email-form">
+      <input type="email" placeholder="Your email address"/>
+      <button class="sw-email-submit">Sign Me Up →</button>
+      <div class="sw-email-note">No spam. Unsubscribe any time.</div>
+    </div> 
+  </div> -->
+  </section>
+
+  <!-- FOOTER (delete this block if using Kajabi's native footer) 
+<footer class="sw-footer">
+  <a class="sw-footer-logo" href="https://courses.sirwade.com/">
+    <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2152768745/settings_images/56088e3-c0ac-7e0-0247-3486f4022acd_Sir_Wade_-_Secondary_LogoArtboard_6_4.png" alt="Sir Wade Animation"/>
+  </a>
+  <div class="sw-footer-links">
+    <a href="https://courses.sirwade.com/store">All Courses</a>
+    <a href="https://courses.sirwade.com/resource_redirect/landing_pages/2149278469">Maya Workshop</a>
+    <a href="https://courses.sirwade.com/login">Log In</a>
+  </div>
+  <div class="sw-footer-copy">© 2026 Sir Wade Animation</div>
+</footer>
+--></div>
+<!-- /#sw-home -->
+
+<script>
+  (function () {
+    var track = document.getElementById("swSliderTrack");
+    var dotsEl = document.getElementById("swSliderDots");
+    if (!track || !dotsEl) return;
+    var slides = track.querySelectorAll(".sw-slide");
+    var total = slides.length,
+      current = 0,
+      timer;
+    slides.forEach(function (_, i) {
+      var d = document.createElement("button");
+      d.className = "sw-sdot" + (i === 0 ? " active" : "");
+      d.setAttribute("aria-label", "Slide " + (i + 1));
+      d.addEventListener("click", function () {
+        goTo(i);
+      });
+      dotsEl.appendChild(d);
+    });
+    function goTo(n) {
+      current = (n + total) % total;
+      track.style.transform = "translateX(-" + current * 100 + "%)";
+      dotsEl.querySelectorAll(".sw-sdot").forEach(function (d, i) {
+        d.classList.toggle("active", i === current);
+      });
+      reset();
+    }
+    function reset() {
+      clearInterval(timer);
+      timer = setInterval(function () {
+        goTo(current + 1);
+      }, 5800);
+    }
+    document.getElementById("swPrevBtn").addEventListener("click", function () {
+      goTo(current - 1);
+    });
+    document.getElementById("swNextBtn").addEventListener("click", function () {
+      goTo(current + 1);
+    });
+    var sx = 0;
+    track.addEventListener(
+      "touchstart",
+      function (e) {
+        sx = e.touches[0].clientX;
+      },
+      { passive: true },
+    );
+    track.addEventListener(
+      "touchend",
+      function (e) {
+        var dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+      },
+      { passive: true },
+    );
+    reset();
+  })();
+</script>

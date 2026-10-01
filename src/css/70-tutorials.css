@@ -1,0 +1,176 @@
+/* ==========================================================================
+   70 — TUTORIALS
+   Dark band with a 3D coverflow carousel.
+
+   src/js/30-tutorials.js sets four custom properties per slide
+   (--sw-o offset, --sw-s scale, --sw-op opacity, --sw-z stacking) and this
+   file composes them into the transform. Keeping the maths in JS and the
+   look in CSS means the depth of the effect is tunable from here alone.
+   ========================================================================== */
+
+.sw-scope.sw-tutorials {
+  background: var(--sw-ink-2);
+  color: var(--sw-text-on-dark);
+  overflow: hidden;
+}
+.sw-scope.sw-tutorials .sw-h2 {
+  color: var(--sw-cream) !important;
+  margin-bottom: 0.6rem;
+}
+.sw-scope.sw-tutorials .sw-sub {
+  color: var(--sw-green-bright) !important;
+  font-weight: 700;
+  max-width: 48ch;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.sw-scope.sw-tutorials .sw-doodle-clapper {
+  color: var(--sw-green-bright);
+  width: clamp(90px, 11vw, 160px);
+  /* Sits to the right of the headline — clear of its longest line. */
+  top: clamp(2.5rem, 6vw, 5.5rem);
+  left: clamp(21rem, 54vw, 64rem);
+}
+
+/* ── Coverflow ───────────────────────────────────────────── */
+.sw-scope.sw-tutorials .sw-flow {
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  height: clamp(220px, 32vw, 470px);
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+}
+.sw-scope.sw-tutorials .sw-flow-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.sw-scope.sw-tutorials .sw-flow-item {
+  --sw-o: 0;
+  --sw-s: 1;
+  --sw-op: 1;
+  --sw-z: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(240px, 38vw, 560px);
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  opacity: var(--sw-op);
+  z-index: var(--sw-z);
+  transform: translate3d(-50%, -50%, 0) translateX(calc(var(--sw-o) * 46%))
+    rotateY(calc(var(--sw-o) * -26deg)) scale(var(--sw-s));
+  transition:
+    transform 0.45s var(--sw-ease),
+    opacity 0.45s var(--sw-ease);
+  cursor: pointer;
+}
+.sw-scope.sw-tutorials .sw-flow-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Empty slot — shown until a `tutorials.*` id is filled in. The resolver
+   adds .has-media to any slide it manages to populate. */
+.sw-scope.sw-tutorials .sw-flow-item img:not([src]) {
+  display: none;
+}
+.sw-scope.sw-tutorials .sw-flow-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 2px dashed rgba(243, 232, 210, 0.22);
+  border-radius: inherit;
+  color: rgba(243, 232, 210, 0.38);
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.sw-scope.sw-tutorials .sw-flow-item.has-media .sw-flow-placeholder {
+  display: none;
+}
+.sw-scope.sw-tutorials .sw-flow-item.is-active {
+  cursor: default;
+}
+/* Runtime badge, bottom-right of each thumbnail */
+.sw-scope.sw-tutorials .sw-flow-time {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font-size: clamp(0.6rem, 0.9vw, 0.85rem);
+  font-weight: 500;
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+.sw-scope.sw-tutorials .sw-flow-nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: clamp(34px, 3.4vw, 46px);
+  height: clamp(34px, 3.4vw, 46px);
+  border-radius: 50%;
+  background: rgba(243, 232, 210, 0.1);
+  border: 1px solid rgba(243, 232, 210, 0.22);
+  display: grid;
+  place-items: center;
+  color: var(--sw-cream);
+  z-index: 50;
+  transition: background 0.2s var(--sw-ease);
+}
+.sw-scope.sw-tutorials .sw-flow-nav:hover {
+  background: var(--sw-green);
+}
+.sw-scope.sw-tutorials .sw-flow-nav svg {
+  width: 45%;
+  height: 45%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sw-scope.sw-tutorials .sw-flow-prev {
+  left: clamp(0.5rem, 3vw, 3.5rem);
+}
+.sw-scope.sw-tutorials .sw-flow-next {
+  right: clamp(0.5rem, 3vw, 3.5rem);
+}
+
+.sw-scope.sw-tutorials .sw-flow-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: clamp(1rem, 2vw, 1.6rem);
+}
+.sw-scope.sw-tutorials .sw-flow-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(243, 232, 210, 0.22);
+  transition:
+    background 0.2s var(--sw-ease),
+    transform 0.2s var(--sw-ease);
+}
+.sw-scope.sw-tutorials .sw-flow-dot.is-active {
+  background: var(--sw-cream);
+  transform: scale(1.25);
+}
+
+@media (max-width: 760px) {
+  .sw-scope.sw-tutorials .sw-doodle-clapper {
+    display: none;
+  }
+  .sw-scope.sw-tutorials .sw-flow-item {
+    width: 72vw;
+  }
+}

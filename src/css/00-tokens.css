@@ -1,0 +1,77 @@
+/* ==========================================================================
+   00 — DESIGN TOKENS
+   Every colour, font and rhythm value in the site resolves to one of these.
+   Change a token here and the whole page follows.
+
+   Tokens live on :root so they're reachable from inline styles pasted into
+   Kajabi — you can override any of them from a Kajabi head snippet without
+   touching this repo. See blocks/00-head.html.
+   ========================================================================== */
+
+:root {
+  /* ── Surfaces ───────────────────────────────────────────── */
+  --sw-cream: #f3e8d2;
+  --sw-cream-2: #f7f0e2;
+  --sw-white: #ffffff;
+  --sw-green: #376d53; /* Current Classes band, buttons */
+  --sw-green-deep: #2b5742;
+  --sw-ink: #182821; /* Reviews band */
+  --sw-ink-2: #141f18; /* Tutorials band */
+  --sw-black: #000000; /* Footer */
+
+  /* ── Brand accents ──────────────────────────────────────── */
+  --sw-green-bright: #3cb44a; /* "BETTER." / "MENTORSHIP" */
+  --sw-green-soft: #8fb79a; /* muted labels on dark */
+  --sw-green-mint: #b8dcc4; /* highlight pill behind bio text */
+  --sw-gold: #e3aa4a; /* "STARTING NOW!" / squiggles */
+  --sw-gold-soft: #eac77f;
+  --sw-red: #e4514f; /* hero swash, newsletter copy */
+  --sw-yellow: #e6e03c; /* mentorship doodles */
+  --sw-blue: #3ba9d9; /* envelope doodle */
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --sw-text: #1a2a1f;
+  --sw-text-muted: #5a6e5e;
+  --sw-text-on-dark: #f3e8d2;
+  --sw-text-on-dark-muted: rgba(243, 232, 210, 0.72);
+
+  /* ── Cards ──────────────────────────────────────────────── */
+  --sw-card-green-top: #6f9c80;
+  --sw-card-green-bot: #3f6d53;
+  --sw-review-card-top: #5b8670;
+  --sw-review-card-bot: #3c6b51;
+
+  /* ── Type ───────────────────────────────────────────────────
+     --sw-font-display is the slanted marker face used for every
+     headline, card title and button label.
+
+     Swapping in the real brand font later is a ONE-LINE change:
+     load it in blocks/00-head.html, then set
+       --sw-font-display: "Your Brand Font", cursive;
+       --sw-display-skew: 0deg;   (real marker fonts already slant)
+     ───────────────────────────────────────────────────────── */
+  --sw-font-display: "Permanent Marker", "Caveat Brush", cursive;
+  --sw-font-body: "Poppins", "Nunito", system-ui, -apple-system, sans-serif;
+  --sw-display-skew: -7deg; /* fakes the mockup's slant on Permanent Marker */
+  --sw-display-tracking: 0.04em;
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  --sw-max: 1360px; /* content container width */
+  --sw-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --sw-section-y: clamp(3.5rem, 7vw, 6rem);
+  --sw-radius: 14px;
+  --sw-radius-lg: 22px;
+
+  /* ── Hero arc ───────────────────────────────────────────────
+     The curved mask over the hero media. Derived by fitting a circle
+     to the mockup: centre (79%, 120%), radius 56% of hero width.
+     Nudge these three to reshape the curve. */
+  --sw-hero-arc-rx: 56%;
+  --sw-hero-arc-ry: 128%;
+  --sw-hero-arc-cx: 79%;
+  --sw-hero-arc-cy: 120%;
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --sw-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --sw-marquee-duration: 60s;
+}

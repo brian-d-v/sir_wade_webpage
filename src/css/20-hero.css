@@ -1,0 +1,150 @@
+/* ==========================================================================
+   20 — HERO
+   Cream field on the left, media masked by a large circular arc on the right.
+
+   The arc is a clip-path ellipse fitted to the mockup: a circle centred at
+   (79%, 120%) of the hero box with radius 56% of its width. Expressed in
+   percentages it stays compositionally identical at any viewport width.
+   Reshape it from the --sw-hero-arc-* tokens.
+   ========================================================================== */
+
+.sw-scope.sw-hero {
+  background: var(--sw-cream);
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(380px, 44vw, 620px);
+  display: flex;
+  align-items: center;
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ── Media layer ─────────────────────────────────────────── */
+.sw-scope.sw-hero .sw-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  clip-path: ellipse(
+    var(--sw-hero-arc-rx) var(--sw-hero-arc-ry) at var(--sw-hero-arc-cx)
+      var(--sw-hero-arc-cy)
+  );
+  background: var(--sw-ink);
+}
+.sw-scope.sw-hero .sw-hero-media > img,
+.sw-scope.sw-hero .sw-hero-media > video,
+.sw-scope.sw-hero .sw-hero-media > iframe {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border: 0;
+  display: block;
+}
+/* Shown only when no asset resolves — see src/js/00-assets.js */
+.sw-scope.sw-hero .sw-hero-media .sw-media-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(140deg, #2b4a39 0%, #0e1f14 100%);
+  color: rgba(243, 232, 210, 0.3);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ── Copy ──────────────────────────────────────────────────
+   .sw-hero-inner is the centred page container; .sw-hero-copy is the
+   narrow column inside it. Constraining the container itself would
+   centre the copy instead of pinning it left of the arc. */
+.sw-scope.sw-hero .sw-hero-inner {
+  position: relative;
+  z-index: 2;
+}
+.sw-scope.sw-hero .sw-hero-copy {
+  max-width: min(46%, 34rem);
+}
+.sw-scope.sw-hero .sw-hero-title {
+  font-family: var(--sw-font-body) !important;
+  font-weight: 800 !important;
+  font-size: clamp(1.85rem, 4.6vw, 3.6rem) !important;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--sw-text) !important;
+  margin-bottom: 0.35rem;
+}
+.sw-scope.sw-hero .sw-hero-title .sw-hl-green {
+  color: var(--sw-green-bright) !important;
+}
+.sw-scope.sw-hero .sw-hero-title .sw-hl-gold {
+  color: var(--sw-gold) !important;
+}
+.sw-scope.sw-hero .sw-hero-title em {
+  font-style: italic;
+}
+
+/* Red marker swash under the headline */
+.sw-scope.sw-hero .sw-hero-swash {
+  color: var(--sw-red);
+  width: clamp(200px, 36%, 420px);
+  margin-bottom: clamp(1.6rem, 3.5vw, 2.8rem);
+}
+.sw-scope.sw-hero .sw-hero-swash path {
+  stroke-width: 3;
+}
+
+/* Stacked COURSES / MENTORSHIP / TUTORIALS list */
+.sw-scope.sw-hero .sw-hero-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  margin-bottom: clamp(1.4rem, 3vw, 2.2rem);
+}
+.sw-scope.sw-hero .sw-hero-menu a {
+  font-family: var(--sw-font-body) !important;
+  font-weight: 700 !important;
+  font-size: clamp(1.15rem, 2.5vw, 2rem) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.2;
+  display: inline-block;
+  transition: transform 0.18s var(--sw-ease);
+}
+.sw-scope.sw-hero .sw-hero-menu a:hover {
+  transform: translateX(6px);
+}
+.sw-scope.sw-hero .sw-hero-menu li:nth-child(1) a {
+  color: var(--sw-green) !important;
+}
+.sw-scope.sw-hero .sw-hero-menu li:nth-child(2) a {
+  color: var(--sw-green-bright) !important;
+}
+.sw-scope.sw-hero .sw-hero-menu li:nth-child(3) a {
+  color: var(--sw-text) !important;
+}
+
+/* ── Narrow screens ──────────────────────────────────────────
+   The arc stops working once the copy needs the full width, so the
+   media becomes a full-bleed backdrop behind a cream scrim instead. */
+@media (max-width: 900px) {
+  .sw-scope.sw-hero .sw-hero-copy {
+    max-width: 100%;
+  }
+  .sw-scope.sw-hero .sw-hero-media {
+    clip-path: none;
+    opacity: 0.22;
+  }
+  .sw-scope.sw-hero .sw-hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--sw-cream);
+    opacity: 0.45;
+  }
+  .sw-scope.sw-hero .sw-hero-swash {
+    width: min(300px, 70%);
+  }
+}

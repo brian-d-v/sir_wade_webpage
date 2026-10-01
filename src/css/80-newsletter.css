@@ -1,0 +1,107 @@
+/* ==========================================================================
+   80 — NEWSLETTER
+   Cream band, copy left, white form card right.
+
+   The <form> here is markup-only. Wire it to Kajabi by replacing the inner
+   form with a Kajabi Form block, or point its `action` at your form endpoint
+   — see blocks/08-newsletter.html for both paths.
+   ========================================================================== */
+
+.sw-scope.sw-newsletter {
+  background: var(--sw-cream);
+}
+.sw-scope.sw-newsletter .sw-news-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.sw-scope.sw-newsletter .sw-h2 {
+  color: var(--sw-green) !important;
+  margin-bottom: 1rem;
+}
+.sw-scope.sw-newsletter .sw-news-lead {
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.4vw, 1.25rem);
+  color: var(--sw-text) !important;
+  margin-bottom: 1.1rem;
+}
+.sw-scope.sw-newsletter .sw-news-lead em {
+  font-style: italic;
+  color: var(--sw-green-bright) !important;
+}
+.sw-scope.sw-newsletter .sw-news-note {
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(0.85rem, 1.2vw, 1.08rem);
+  line-height: 1.5;
+  color: var(--sw-red) !important;
+}
+
+.sw-scope.sw-newsletter .sw-doodle-envelope {
+  color: var(--sw-blue);
+  width: clamp(120px, 15vw, 210px);
+  bottom: clamp(-1rem, 1vw, 1rem);
+  left: clamp(14rem, 28vw, 32rem);
+}
+
+/* ── Form card ───────────────────────────────────────────── */
+.sw-scope.sw-newsletter .sw-news-card {
+  background: var(--sw-white);
+  border-radius: var(--sw-radius);
+  padding: clamp(1.25rem, 2.2vw, 1.9rem);
+  box-shadow: 0 10px 30px rgba(55, 109, 83, 0.1);
+}
+.sw-scope.sw-newsletter .sw-news-form {
+  display: grid;
+  gap: 0.8rem;
+}
+.sw-scope.sw-newsletter .sw-news-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-family: var(--sw-font-body) !important;
+  font-size: 0.95rem !important;
+  color: var(--sw-text) !important;
+  background: var(--sw-white) !important;
+  border: 1px solid #d8d8d2 !important;
+  border-radius: 6px;
+  outline: none;
+  transition:
+    border-color 0.2s var(--sw-ease),
+    box-shadow 0.2s var(--sw-ease);
+}
+.sw-scope.sw-newsletter .sw-news-form input::placeholder {
+  color: #8a8f88 !important;
+}
+.sw-scope.sw-newsletter .sw-news-form input:focus {
+  border-color: var(--sw-green) !important;
+  box-shadow: 0 0 0 3px rgba(55, 109, 83, 0.14);
+}
+.sw-scope.sw-newsletter .sw-news-form button {
+  width: 100%;
+  background: var(--sw-green) !important;
+  color: var(--sw-white) !important;
+  font-family: var(--sw-font-body) !important;
+  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.95rem 1rem;
+  border-radius: 6px;
+  transition:
+    background 0.2s var(--sw-ease),
+    transform 0.2s var(--sw-ease);
+}
+.sw-scope.sw-newsletter .sw-news-form button:hover {
+  background: var(--sw-green-deep) !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+  .sw-scope.sw-newsletter .sw-news-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sw-scope.sw-newsletter .sw-doodle-envelope {
+    display: none;
+  }
+}

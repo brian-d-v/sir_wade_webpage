@@ -1,0 +1,133 @@
+/* ==========================================================================
+   40 — MENTORSHIP
+   Cream band with three pennant cards: rounded top, pointed bottom.
+
+   The pennant is a clip-path polygon intersected with border-radius — the
+   radius rounds the top corners, the polygon cuts the bottom to a point.
+   Both apply, and the browser renders their intersection.
+   ========================================================================== */
+
+.sw-scope.sw-mentorship {
+  background: var(--sw-cream);
+}
+.sw-scope.sw-mentorship .sw-h2 {
+  color: var(--sw-green) !important;
+  margin-bottom: 0.7rem;
+}
+.sw-scope.sw-mentorship .sw-sub {
+  color: var(--sw-text) !important;
+  font-weight: 700;
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
+  max-width: 60ch;
+}
+
+.sw-scope.sw-mentorship .sw-pennants {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.6rem, 1.4vw, 1.2rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.sw-scope.sw-mentorship .sw-pennant {
+  --sw-pennant-notch: 12%; /* how far up the point starts */
+  background: linear-gradient(
+    170deg,
+    var(--sw-card-green-top) 0%,
+    var(--sw-card-green-bot) 100%
+  );
+  border-radius: var(--sw-radius-lg) var(--sw-radius-lg) 0 0;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--sw-pennant-notch)),
+    50% 100%,
+    0 calc(100% - var(--sw-pennant-notch))
+  );
+  /* Bottom padding has to clear the notch so text never falls into the
+     point — but only just, or the card grows a dead zone. */
+  padding: clamp(1.6rem, 2.6vw, 2.4rem) clamp(1.1rem, 2vw, 1.9rem)
+    clamp(2.4rem, 4.5vw, 3.6rem);
+  text-align: center;
+  color: var(--sw-cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  transition: transform 0.25s var(--sw-ease);
+}
+.sw-scope.sw-mentorship .sw-pennant:hover {
+  transform: translateY(-4px);
+}
+.sw-scope.sw-mentorship .sw-pennant-title {
+  font-family: var(--sw-font-body) !important;
+  font-weight: 500 !important;
+  font-size: clamp(1rem, 1.6vw, 1.45rem) !important;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--sw-cream) !important;
+}
+.sw-scope.sw-mentorship .sw-pennant-icon {
+  color: var(--sw-yellow);
+  width: clamp(88px, 10vw, 132px);
+}
+.sw-scope.sw-mentorship .sw-pennant-icon svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.sw-scope.sw-mentorship .sw-pennant-icon path,
+.sw-scope.sw-mentorship .sw-pennant-icon circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sw-scope.sw-mentorship .sw-pennant-body {
+  font-size: clamp(0.82rem, 1.05vw, 0.98rem) !important;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(243, 232, 210, 0.95) !important;
+}
+/* Software badges (Maya / Unreal / Blender) */
+.sw-scope.sw-mentorship .sw-pennant-apps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 0.2rem;
+}
+.sw-scope.sw-mentorship .sw-pennant-apps img {
+  height: clamp(26px, 2.6vw, 36px) !important;
+  width: auto;
+  border-radius: 6px;
+}
+/* An app key left unset in SW_ASSETS resolves to nothing — hide the slot
+   rather than render a broken-image icon. */
+.sw-scope.sw-mentorship .sw-pennant-apps img:not([src]),
+.sw-scope.sw-mentorship .sw-pennant-apps img[src=""] {
+  display: none;
+}
+
+.sw-scope.sw-mentorship .sw-mentorship-cta {
+  display: flex;
+  justify-content: center;
+}
+.sw-scope.sw-mentorship .sw-mentorship-cta .sw-btn {
+  font-size: clamp(0.95rem, 1.5vw, 1.35rem) !important;
+  padding: 0.6em 1.8em;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 860px) {
+  .sw-scope.sw-mentorship .sw-pennants {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+  .sw-scope.sw-mentorship .sw-pennant {
+    --sw-pennant-notch: 7%;
+  }
+}

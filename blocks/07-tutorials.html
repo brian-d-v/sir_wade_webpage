@@ -1,0 +1,104 @@
+<!-- ============================================================
+     SIR WADE — 07 TUTORIALS
+     PASTE INTO: Custom Code block. Section padding 0, full width.
+
+     SETUP — fill in five video ids in blocks/00-head.html:
+
+       tutorials: {
+         t1: "dQw4w9WgXcQ",                       // bare id, or
+         t2: "https://youtu.be/dQw4w9WgXcQ",      // any YouTube URL, or
+         t3: "https://kajabi-cdn.../custom.jpg"   // your own thumbnail
+       }
+
+     `data-sw-yt` sets BOTH the thumbnail and the watch link from that one
+     value. Slides with no id show a dashed placeholder instead.
+
+     ADDING A VIDEO: copy one <a class="sw-flow-item">, give it the next
+     `tutorials.*` key. Dots are generated from the slide count.
+     ============================================================ -->
+
+<section class="sw-scope sw-section sw-tutorials" id="sw-tutorials">
+  <div class="sw-doodle sw-doodle-clapper" aria-hidden="true">
+    <svg viewBox="0 0 170 60" fill="none">
+      <circle cx="18" cy="38" r="13" />
+      <circle cx="78" cy="30" r="13" />
+      <circle cx="148" cy="10" r="8" />
+      <path d="M26 30 70 16" />
+      <path d="M30 46 66 42" />
+      <path d="M90 26l50-14" />
+      <path d="M88 36l54-20" />
+    </svg>
+  </div>
+
+  <div class="sw-wrap">
+    <h2 class="sw-display sw-h2">Tutorials, Demos &amp; More!</h2>
+    <p class="sw-sub">
+      Free tutorials and animation breakdowns trusted by artists at every
+      level, from students to studio professionals.
+    </p>
+  </div>
+
+  <div class="sw-flow">
+    <div class="sw-flow-stage">
+      <a
+        class="sw-flow-item"
+        data-sw-yt="tutorials.t1"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        <img alt="" />
+        <span class="sw-flow-placeholder">Add video 1</span>
+      </a>
+      <a
+        class="sw-flow-item"
+        data-sw-yt="tutorials.t2"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        <img alt="" />
+        <span class="sw-flow-placeholder">Add video 2</span>
+      </a>
+      <a
+        class="sw-flow-item"
+        data-sw-yt="tutorials.t3"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        <img alt="" />
+        <span class="sw-flow-placeholder">Add video 3</span>
+      </a>
+      <a
+        class="sw-flow-item"
+        data-sw-yt="tutorials.t4"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        <img alt="" />
+        <span class="sw-flow-placeholder">Add video 4</span>
+      </a>
+      <a
+        class="sw-flow-item"
+        data-sw-yt="tutorials.t5"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        <img alt="" />
+        <span class="sw-flow-placeholder">Add video 5</span>
+      </a>
+    </div>
+
+    <button class="sw-flow-nav sw-flow-prev" type="button" aria-label="Previous">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
+    </button>
+    <button class="sw-flow-nav sw-flow-next" type="button" aria-label="Next">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+    </button>
+  </div>
+
+  <div class="sw-flow-dots"></div>
+</section>

@@ -1,0 +1,63 @@
+<!-- ============================================================
+     SIR WADE — 08 NEWSLETTER
+     PASTE INTO: Custom Code block. Section padding 0, full width.
+
+     WIRING THE FORM — pick one:
+
+     A) Kajabi Form block (recommended). Paste this block, then add a
+        Kajabi Form element immediately after it and delete the <form>
+        below. Kajabi handles the opt-in, double opt-in and automation.
+
+     B) Keep this form and point it at your endpoint:
+          <form action="https://your-endpoint" method="post">
+        Field names are already `name` and `email`.
+
+     As written the form does nothing on submit — that is deliberate, so
+     it can't silently swallow signups before you wire it up.
+     ============================================================ -->
+
+<section class="sw-scope sw-section sw-newsletter" id="sw-newsletter">
+  <div class="sw-doodle sw-doodle-envelope" aria-hidden="true">
+    <svg viewBox="0 0 200 120" fill="none">
+      <path d="M84 34 176 20l12 56-92 20-12-62Z" />
+      <path d="m84 34 56 26 48-40" />
+      <path d="M100 52h30" />
+      <path d="M104 64h38" />
+      <path d="M108 76h26" />
+      <path d="M6 96 76 60" />
+      <path d="M4 76 58 50" opacity=".8" />
+      <path d="M22 110l54-26" opacity=".6" />
+    </svg>
+  </div>
+
+  <div class="sw-wrap sw-news-grid">
+    <div>
+      <h2 class="sw-display sw-h2">Stay in the loop</h2>
+      <p class="sw-news-lead">
+        New workshops and resources, <em>delivered to your inbox.</em>
+      </p>
+      <p class="sw-news-note">
+        Be the first to know when new courses launch,<br />
+        live workshops open for enrollment, or free resources drop!
+      </p>
+    </div>
+
+    <div class="sw-news-card">
+      <form class="sw-news-form">
+        <label class="sw-sr" for="sw-news-name">Name</label>
+        <input id="sw-news-name" name="name" type="text" placeholder="Name" />
+
+        <label class="sw-sr" for="sw-news-email">Email</label>
+        <input
+          id="sw-news-email"
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+        />
+
+        <button type="submit">Sign me up</button>
+      </form>
+    </div>
+  </div>
+</section>

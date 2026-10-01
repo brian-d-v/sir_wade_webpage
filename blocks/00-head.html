@@ -1,0 +1,74 @@
+<!-- ============================================================
+     SIR WADE — 00 HEAD
+     PASTE INTO: Kajabi → Site Settings → Custom Code → Head
+     (site-wide), or Page Settings → Custom Code → Head for this
+     page only.
+
+     This is the ONLY block that loads CSS/JS. Every section block
+     is pure markup. Paste this first.
+     ============================================================ -->
+
+<!-- ── Fonts ────────────────────────────────────────────────
+     Permanent Marker stands in for the slanted brand marker face,
+     Poppins for the rounded body sans. To swap in the real brand
+     font: load it here, then override --sw-font-display below. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- ── Asset overrides ──────────────────────────────────────
+     EDIT THIS BLOCK, NOT THE REPO.
+     Every key here overrides the default baked into the CDN bundle.
+     Point any key at a file in your Kajabi library — a JPG, PNG, GIF
+     or MP4 all work at the same key; the resolver swaps <img> for
+     <video> automatically when the URL is a video.
+     Delete a key to fall back to the shipped default. -->
+<script>
+  window.SW_ASSETS = {
+    // brand: {
+    //   logoGreen: "https://kajabi-cdn.../sirwade-green.png",
+    //   logoCream: "https://kajabi-cdn.../sirwade-cream.png"
+    // },
+    // hero: {
+    //   media:  "https://kajabi-cdn.../portal-loop.mp4",   // or .gif / .jpg
+    //   poster: "https://kajabi-cdn.../portal-poster.jpg"
+    // },
+    // classes: {
+    //   summerCamp: "...", unreal: "...", maya: "...", basics: "..."
+    // },
+    // apps: { maya: "...", unreal: "...", blender: "..." },
+    // bio: { portrait: "..." },
+    // tutorials: { t1: "...", t2: "...", t3: "...", t4: "...", t5: "..." },
+    // links: { signup: "...", login: "...", waitlist: "..." }
+  };
+</script>
+
+<!-- ── Theme overrides (optional) ───────────────────────────
+     Any token from src/css/00-tokens.css can be re-pointed here
+     without a repo change or a CDN purge. -->
+<style>
+  :root {
+    /* --sw-green: #376d53; */
+    /* --sw-font-display: "Your Brand Marker", cursive; */
+    /* --sw-display-skew: 0deg; */
+  }
+</style>
+
+<!-- ── Styles + behaviour ───────────────────────────────────
+     REPLACE `USER/REPO` with your GitHub handle and repo name.
+
+     The @main tag below serves the latest commit but jsDelivr caches
+     it for up to 12h. For production, publish a git tag and pin it:
+         @v1.0.0  instead of  @main
+     See README.md → "Releasing a new version". -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/USER/REPO@main/dist/sirwade.css"
+/>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/gh/USER/REPO@main/dist/sirwade.js"
+></script>

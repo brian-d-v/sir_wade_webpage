@@ -1,0 +1,163 @@
+/* ==========================================================================
+   50 — REVIEWS
+   Near-black band, two marquee rows drifting in opposite directions.
+
+   Each row's track is duplicated once in the DOM (done by JS, not by hand)
+   and translated -50%, so the loop is seamless. Hovering pauses it.
+   ========================================================================== */
+
+.sw-scope.sw-reviews {
+  background: var(--sw-ink);
+  color: var(--sw-text-on-dark);
+  overflow: hidden;
+}
+.sw-scope.sw-reviews .sw-h2 {
+  color: var(--sw-cream) !important;
+  margin-bottom: 0.5rem;
+}
+.sw-scope.sw-reviews .sw-reviews-label {
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  color: var(--sw-green-soft) !important;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.sw-scope.sw-reviews .sw-doodle-star {
+  color: var(--sw-yellow);
+  width: clamp(80px, 9vw, 130px);
+  top: clamp(1rem, 3vw, 3rem);
+  right: clamp(1rem, 6vw, 6rem);
+}
+.sw-scope.sw-reviews .sw-doodle-ticks {
+  color: var(--sw-gold);
+  width: clamp(60px, 7vw, 100px);
+  top: clamp(0.5rem, 2vw, 1.5rem);
+  right: clamp(8rem, 22vw, 20rem);
+}
+
+/* ── Marquee ─────────────────────────────────────────────── */
+.sw-scope.sw-reviews .sw-marquee {
+  position: relative;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  /* fade the cards out at both edges instead of hard-cutting them */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+}
+.sw-scope.sw-reviews .sw-marquee + .sw-marquee {
+  margin-top: clamp(0.9rem, 1.6vw, 1.5rem);
+}
+.sw-scope.sw-reviews .sw-marquee-track {
+  display: flex;
+  gap: clamp(0.9rem, 1.6vw, 1.5rem);
+  width: max-content;
+  padding-inline: clamp(0.45rem, 0.8vw, 0.75rem);
+  animation: sw-marquee-left var(--sw-marquee-duration) linear infinite;
+}
+.sw-scope.sw-reviews .sw-marquee.is-reverse .sw-marquee-track {
+  animation-name: sw-marquee-right;
+}
+.sw-scope.sw-reviews .sw-marquee:hover .sw-marquee-track,
+.sw-scope.sw-reviews .sw-marquee:focus-within .sw-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes sw-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes sw-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ── Review card ─────────────────────────────────────────── */
+.sw-scope.sw-reviews .sw-review {
+  flex: 0 0 auto;
+  width: clamp(250px, 24vw, 330px);
+  background: linear-gradient(
+    165deg,
+    var(--sw-review-card-top) 0%,
+    var(--sw-review-card-bot) 100%
+  );
+  border: 1px solid rgba(243, 232, 210, 0.16);
+  border-radius: var(--sw-radius);
+  padding: clamp(1.2rem, 1.8vw, 1.75rem) clamp(1rem, 1.6vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  transition: border-color 0.2s var(--sw-ease);
+}
+.sw-scope.sw-reviews .sw-review:hover {
+  border-color: rgba(243, 232, 210, 0.4);
+}
+.sw-scope.sw-reviews .sw-review-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--sw-cream);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.sw-scope.sw-reviews .sw-review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sw-scope.sw-reviews .sw-review-avatar span {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--sw-green) !important;
+  letter-spacing: 0.02em;
+}
+.sw-scope.sw-reviews .sw-review-course {
+  font-weight: 700;
+  font-size: 0.74rem !important;
+  color: var(--sw-green-mint) !important;
+  letter-spacing: 0.01em;
+}
+.sw-scope.sw-reviews .sw-review-quote {
+  font-size: 0.83rem !important;
+  line-height: 1.55;
+  color: var(--sw-text-on-dark) !important;
+  flex: 1;
+}
+.sw-scope.sw-reviews .sw-review-name {
+  font-weight: 700;
+  font-size: 0.92rem !important;
+  color: var(--sw-white) !important;
+}
+
+@media (max-width: 560px) {
+  .sw-scope.sw-reviews .sw-doodle-ticks {
+    display: none;
+  }
+  .sw-scope.sw-reviews .sw-review {
+    width: 76vw;
+  }
+}

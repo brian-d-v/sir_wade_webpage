@@ -1,0 +1,28 @@
+<!-- ============================================================
+     SIR WADE — 01 NAV
+     PASTE INTO: a Custom Code block at the TOP of the page.
+     Kajabi section settings → padding 0, full width, background white.
+
+     OPTIONAL: if you'd rather keep Kajabi's native header, skip this
+     block entirely. Nothing else depends on it.
+     ============================================================ -->
+
+<header class="sw-scope sw-nav">
+  <div class="sw-wrap sw-nav-inner">
+    <!-- sw-tint-green recolours the cream wordmark for this white bar.
+         Remove the class once `brand.logoGreen` points at a real green
+         wordmark. See src/css/10-nav.css. -->
+    <a class="sw-nav-logo sw-tint-green" href="/" aria-label="Sir Wade — home">
+      <img data-sw-src="brand.logoGreen" alt="Sir Wade" />
+    </a>
+
+    <nav class="sw-nav-right" aria-label="Primary">
+      <div class="sw-nav-links">
+        <a data-sw-href="links.courses" href="#">Courses</a>
+        <a data-sw-href="links.mentorship" href="#">Mentorship</a>
+        <a data-sw-href="links.tutorials" href="#">Tutorials</a>
+      </div>
+      <a class="sw-nav-login" data-sw-href="links.login" href="#">Log in</a>
+    </nav>
+  </div>
+</header>

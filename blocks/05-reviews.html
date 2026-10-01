@@ -1,0 +1,161 @@
+<!-- ============================================================
+     SIR WADE — 05 STUDENT REVIEWS
+     PASTE INTO: Custom Code block. Section padding 0, full width.
+
+     Two rows scroll in opposite directions and pause on hover. You only
+     write each review ONCE — src/js/20-reviews.js clones the track to
+     make the loop seamless. Add or remove <article class="sw-review">
+     freely; the speed stays constant because duration is derived from
+     track width.
+
+     An avatar can be either an image (data-sw-src="avatars.key") or
+     initials (<span>AB</span>). Use whichever you have.
+     ============================================================ -->
+
+<section class="sw-scope sw-section sw-reviews" id="sw-reviews">
+  <div class="sw-doodle sw-doodle-star" aria-hidden="true">
+    <svg viewBox="0 0 120 120" fill="none">
+      <path
+        d="M55 7 66 37l32 1-25 20 8 30-26-17-26 17 8-30-25-20 32-1Z"
+      />
+      <path d="M74 86c8 6 14 14 18 26" stroke-width="2.5" />
+      <path d="M86 79c10 8 17 19 21 32" stroke-width="2.5" />
+    </svg>
+  </div>
+  <div class="sw-doodle sw-doodle-ticks" aria-hidden="true">
+    <svg viewBox="0 0 90 70" fill="none">
+      <path d="M8 6l10 2-3 14-9-7z" />
+      <path d="M38 4l11 4-5 15-8-9z" />
+      <path d="M46 40l12 2-4 13-9-7z" />
+    </svg>
+  </div>
+
+  <div class="sw-wrap">
+    <h2 class="sw-display sw-h2">Hear from past students&hellip;</h2>
+    <p class="sw-reviews-label">Student Reviews</p>
+  </div>
+
+  <!-- ── Row 1 — drifts left ──────────────────────────────── -->
+  <div class="sw-marquee">
+    <div class="sw-marquee-track">
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.ariana" alt="" />
+        </div>
+        <p class="sw-review-course">Maya for Animators</p>
+        <p class="sw-review-quote">
+          &ldquo;I have to say that this is the best workshop I&rsquo;ve ever
+          taken for animation. If you are new to Maya or if you&rsquo;re a
+          7-year veteran like I am, you will have plenty to learn either
+          way.&rdquo;
+        </p>
+        <p class="sw-review-name">Ariana Alexander</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.carlos" alt="" />
+        </div>
+        <p class="sw-review-course">Maya for Animators</p>
+        <p class="sw-review-quote">
+          &ldquo;This workshop taught me more about Maya animation than the 3
+          years of university that I already wasted before this class. Forget
+          school — if you take everything Sir Wade says to heart, you&rsquo;ll
+          be better off.&rdquo;
+        </p>
+        <p class="sw-review-name">Carlos Vazquez</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.amanda" alt="" />
+        </div>
+        <p class="sw-review-course">Animation Workshop</p>
+        <p class="sw-review-quote">
+          &ldquo;I had been feeling stuck in an animation rut, but this helped
+          energize me and give me new ideas that make me want to get back into
+          it regularly again.&rdquo;
+        </p>
+        <p class="sw-review-name">Amanda Burley</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.charlotte" alt="" />
+        </div>
+        <p class="sw-review-course">Maya for Animators</p>
+        <p class="sw-review-quote">
+          &ldquo;Absolutely packed with tricks and demos. This gave me SO many
+          answers to questions I didn&rsquo;t even know I had. It&rsquo;s the
+          workshop we all need!&rdquo;
+        </p>
+        <p class="sw-review-name">Charlotte Taylor</p>
+      </article>
+    </div>
+  </div>
+
+  <!-- ── Row 2 — drifts right ─────────────────────────────── -->
+  <div class="sw-marquee is-reverse">
+    <div class="sw-marquee-track">
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.sarthak" alt="" />
+        </div>
+        <p class="sw-review-course">Maya for Animators</p>
+        <p class="sw-review-quote">
+          &ldquo;I learned more in a week than I did in 4 years. Examples on
+          different topics, insights on how it applies in real life when
+          working with a rig or for a studio — genuinely great teaching.&rdquo;
+        </p>
+        <p class="sw-review-name">Sarthak Khurana</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar"><span>KY</span></div>
+        <p class="sw-review-course">Animating in Unreal Engine 5.5</p>
+        <p class="sw-review-quote">
+          &ldquo;Fantastic! Sir has put a great deal of effort into creating
+          this course, and it shows. His distinctive, friendly teaching style
+          makes this thoroughly informative course very enjoyable.&rdquo;
+        </p>
+        <p class="sw-review-name">Kirsten Yamaguchi</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.amanda" alt="" />
+        </div>
+        <p class="sw-review-course">Animation Workshop</p>
+        <p class="sw-review-quote">
+          &ldquo;I had been feeling stuck in an animation rut, but this helped
+          energize me and give me new ideas that make me want to get back into
+          it regularly again.&rdquo;
+        </p>
+        <p class="sw-review-name">Amanda Burley</p>
+      </article>
+
+      <article class="sw-review">
+        <div class="sw-review-avatar">
+          <img data-sw-src="avatars.carlos" alt="" />
+        </div>
+        <p class="sw-review-course">Maya for Animators</p>
+        <p class="sw-review-quote">
+          &ldquo;This workshop taught me more about Maya animation than the 3
+          years of university that I already wasted before this class. Forget
+          school — if you take everything Sir Wade says to heart, you&rsquo;ll
+          be better off.&rdquo;
+        </p>
+        <p class="sw-review-name">Carlos Vazquez</p>
+      </article>
+    </div>
+  </div>
+
+  <!-- Wave into the white Bio band -->
+  <div class="sw-wave is-bottom" style="color: var(--sw-white)" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path
+        d="M0 50c160 22 320 30 520 22s420-28 620-16c110 7 210 14 300 10V80H0Z"
+      />
+    </svg>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+<!-- ============================================================
+     SIR WADE — 02 HERO
+     PASTE INTO: Custom Code block, directly under the nav.
+     Kajabi section settings → padding 0, full width.
+
+     MEDIA: the <img> below is swapped for an autoplaying <video>
+     automatically if `hero.media` points at an .mp4/.webm/.mov.
+     Set it in blocks/00-head.html — no change needed here.
+     ============================================================ -->
+
+<section class="sw-scope sw-hero">
+  <div class="sw-hero-media">
+    <img data-sw-src="hero.media" data-sw-poster="hero.poster" alt="" />
+    <div class="sw-media-fallback" data-sw-fallback>Add hero media</div>
+  </div>
+
+  <div class="sw-wrap sw-hero-inner">
+    <div class="sw-hero-copy">
+      <h1 class="sw-hero-title">
+        Animate <span class="sw-hl-green">Better.</span><br />
+        <span class="sw-hl-gold">Starting <em>Now!</em></span>
+      </h1>
+
+      <!-- Red marker swash under the headline -->
+      <svg
+        class="sw-squiggle sw-hero-swash"
+        viewBox="0 0 420 18"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M4 12C70 6 150 4 236 7c58 2 120 5 180 2" />
+        <path d="M22 16c96-5 196-7 290-4" opacity=".65" />
+      </svg>
+
+      <ul class="sw-hero-menu">
+        <li><a data-sw-href="links.courses" href="#">Courses</a></li>
+        <li><a data-sw-href="links.mentorship" href="#">Mentorship</a></li>
+        <li><a data-sw-href="links.tutorials" href="#">Tutorials</a></li>
+      </ul>
+
+      <a class="sw-btn sw-btn-solid" data-sw-href="links.signup" href="#">
+        Sign up now!
+        <svg
+          class="sw-arrow"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 12h15m0 0-6-6m6 6-6 6"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

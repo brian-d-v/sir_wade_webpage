@@ -1,0 +1,245 @@
+/* ==========================================================================
+   01 — BASE
+
+   SCOPING MODEL
+   Every Kajabi custom-code block puts `.sw-scope` on its own root element,
+   because separate blocks can't share a single #id wrapper. All rules below
+   are anchored to `.sw-scope`, so Kajabi's theme CSS can't bleed in and ours
+   can't bleed out.
+
+   Kajabi's section wrappers add their own padding and max-width. Set each
+   section to full-width with 0 padding in the Kajabi editor; the overrides
+   at the bottom of this file clean up what's left.
+   ========================================================================== */
+
+.sw-scope {
+  font-family: var(--sw-font-body) !important;
+  font-weight: 400;
+  color: var(--sw-text);
+  line-height: 1.6;
+  width: 100%;
+  position: relative;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.sw-scope *,
+.sw-scope *::before,
+.sw-scope *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.sw-scope img,
+.sw-scope video {
+  max-width: 100%;
+  display: block;
+}
+.sw-scope a {
+  text-decoration: none !important;
+  color: inherit;
+}
+.sw-scope button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ── Container ───────────────────────────────────────────── */
+.sw-scope .sw-wrap {
+  width: 100%;
+  max-width: var(--sw-max);
+  margin-inline: auto;
+  padding-inline: var(--sw-gutter);
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Display headings ─────────────────────────────────────────
+   The marker face. `--sw-display-skew` fakes the mockup's slant;
+   set it to 0deg once a genuinely italic brand font is loaded. */
+.sw-scope .sw-display {
+  font-family: var(--sw-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: var(--sw-display-tracking);
+  line-height: 1.05;
+  text-transform: uppercase;
+  transform: skewX(var(--sw-display-skew));
+  transform-origin: left bottom;
+}
+.sw-scope .sw-h1 {
+  font-size: clamp(2.1rem, 5.2vw, 4.1rem);
+}
+.sw-scope .sw-h2 {
+  font-size: clamp(1.9rem, 4.2vw, 3.3rem);
+}
+.sw-scope .sw-h3 {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.sw-scope .sw-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  font-family: var(--sw-font-display) !important;
+  font-size: clamp(0.85rem, 1.1vw, 1rem) !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: skewX(var(--sw-display-skew));
+  padding: 0.75em 1.6em;
+  border-radius: 999px;
+  transition:
+    transform 0.2s var(--sw-ease),
+    background 0.2s var(--sw-ease),
+    color 0.2s var(--sw-ease),
+    box-shadow 0.2s var(--sw-ease);
+  white-space: nowrap;
+}
+.sw-scope .sw-btn:hover {
+  transform: skewX(var(--sw-display-skew)) translateY(-2px);
+}
+.sw-scope .sw-btn-solid {
+  background: var(--sw-green) !important;
+  color: var(--sw-cream) !important;
+}
+.sw-scope .sw-btn-solid:hover {
+  background: var(--sw-green-deep) !important;
+  box-shadow: 0 10px 26px rgba(55, 109, 83, 0.32);
+}
+.sw-scope .sw-btn-outline {
+  background: transparent;
+  color: var(--sw-green) !important;
+  border: 2px solid var(--sw-green) !important;
+}
+.sw-scope .sw-btn-outline:hover {
+  background: var(--sw-green) !important;
+  color: var(--sw-cream) !important;
+}
+.sw-scope .sw-btn .sw-arrow {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  transition: transform 0.2s var(--sw-ease);
+}
+.sw-scope .sw-btn:hover .sw-arrow {
+  transform: translateX(3px);
+}
+
+/* ── Hand-drawn squiggle underline ───────────────────────── */
+.sw-scope .sw-squiggle {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  overflow: visible;
+}
+.sw-scope .sw-squiggle path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+/* ── Doodles ─────────────────────────────────────────────────
+   Decorative marker scribbles. Absolutely positioned per section
+   and hidden on small screens so they never crowd the content. */
+.sw-scope .sw-doodle {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+.sw-scope .sw-doodle svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.sw-scope .sw-doodle path,
+.sw-scope .sw-doodle circle,
+.sw-scope .sw-doodle line,
+.sw-scope .sw-doodle rect,
+.sw-scope .sw-doodle polygon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Wave dividers ───────────────────────────────────────────
+   Each section that meets another on a curve carries a .sw-wave at
+   its top or bottom. The wave's `color` is set to the colour of the
+   section it is bleeding INTO, and the SVG fills with currentColor.
+   `.is-top` sits above the section, `.is-bottom` below it. */
+.sw-scope .sw-wave {
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  width: calc(100% + 2px);
+  height: clamp(32px, 4.5vw, 72px);
+  z-index: 3;
+  pointer-events: none;
+  line-height: 0;
+}
+.sw-scope .sw-wave.is-top {
+  top: -1px;
+}
+.sw-scope .sw-wave.is-bottom {
+  bottom: -1px;
+}
+.sw-scope .sw-wave svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sw-scope .sw-wave svg path {
+  fill: currentColor;
+}
+
+/* ── Section shells ──────────────────────────────────────── */
+.sw-scope.sw-section {
+  position: relative;
+  padding-block: var(--sw-section-y);
+  isolation: isolate;
+}
+
+/* ── Eyebrow / sub-headline ──────────────────────────────── */
+.sw-scope .sw-sub {
+  font-family: var(--sw-font-body) !important;
+  font-weight: 600;
+  font-size: clamp(0.85rem, 1.15vw, 1.02rem) !important;
+  line-height: 1.65;
+}
+
+/* ── Utility ─────────────────────────────────────────────── */
+.sw-scope .sw-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Kajabi wrapper neutralisers ─────────────────────────────
+   Kajabi wraps custom code in .sw-scope's parent chain. These let a
+   block go edge-to-edge even if the section still has side padding. */
+.sw-scope.sw-bleed {
+  margin-inline: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sw-scope *,
+  .sw-scope *::before,
+  .sw-scope *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

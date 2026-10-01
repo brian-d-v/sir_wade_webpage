@@ -1,0 +1,47 @@
+/* ==========================================================================
+   90 — FOOTER
+   Pure black bar: cursive wordmark left, copyright right.
+   ========================================================================== */
+
+.sw-scope.sw-footer {
+  background: var(--sw-black);
+  color: var(--sw-cream);
+  padding-block: clamp(1.5rem, 3vw, 2.4rem);
+}
+.sw-scope.sw-footer .sw-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.sw-scope.sw-footer .sw-footer-logo img {
+  height: clamp(36px, 4vw, 58px) !important;
+  width: auto;
+}
+.sw-scope.sw-footer .sw-footer-links {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2.2rem);
+  flex-wrap: wrap;
+}
+.sw-scope.sw-footer .sw-footer-links a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(243, 232, 210, 0.6) !important;
+  transition: color 0.2s var(--sw-ease);
+}
+.sw-scope.sw-footer .sw-footer-links a:hover {
+  color: var(--sw-cream) !important;
+}
+.sw-scope.sw-footer .sw-footer-copy {
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  font-weight: 500;
+  color: var(--sw-cream) !important;
+}
+
+@media (max-width: 600px) {
+  .sw-scope.sw-footer .sw-footer-inner {
+    justify-content: center;
+    text-align: center;
+  }
+}
