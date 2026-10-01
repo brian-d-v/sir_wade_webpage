@@ -137,7 +137,9 @@ it back to private takes the live site's CSS and JS down with it.
 | Ref | Cache | Use for |
 | --- | --- | --- |
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
-| `@v1.0.0` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
+| `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
+
+The head snippet is currently pinned to **`@v1.1.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -147,12 +149,16 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.0.1
+git tag v1.1.1
 git push && git push --tags
 ```
 
-Then bump `@v1.0.0` → `@v1.0.1` in the Kajabi head snippet. Two URLs to change,
-and the old version keeps working until you do.
+Then bump the tag in the two CDN URLs in the Kajabi head snippet
+(`@v1.1.0` → `@v1.1.1`). The old version keeps serving until you do, so the
+live page never breaks mid-release.
+
+If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
+the shipped hero plate is referenced by an absolute, tag-pinned URL.
 
 ### Forcing an update on `@main`
 
@@ -171,7 +177,7 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.0.0`.
+   `brian-d-v/sir_wade_webpage@v1.1.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
 3. For every section, set the Kajabi section to **full width** with **0
@@ -185,6 +191,10 @@ to pin tags in production.
 - [ ] Upload a **green** `SirWade` wordmark and set `brand.logoGreen`, then
       drop the `sw-tint-green` class from `blocks/01-nav.html`. The default is
       the cream logo recoloured with a CSS filter — a stopgap, not the asset.
+- [ ] Replace the hero plate. `assets/hero-rift.webp` was extracted from the
+      flattened mockup — correct framing, but soft on retina and a still where
+      the design implies motion. Point `hero.media` at the real render, or a
+      looping `.mp4`/`.webm` (the `<img>` becomes a `<video>` on its own).
 - [ ] Fill in `tutorials.t1`–`t5` with real YouTube ids. They ship empty on
       purpose: a wrong id renders YouTube's grey placeholder instead of
       failing visibly.

@@ -137,6 +137,12 @@
     clip-path: none;
     opacity: 0.22;
   }
+  /* Unclipped, the left of the frame is the part the arc normally hides —
+     dead space in the shipped plate. Bias the crop toward the subject. */
+  .sw-scope.sw-hero .sw-hero-media > img,
+  .sw-scope.sw-hero .sw-hero-media > video {
+    object-position: 72% center;
+  }
   .sw-scope.sw-hero .sw-hero-media::after {
     content: "";
     position: absolute;

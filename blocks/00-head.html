@@ -5,7 +5,19 @@
      page only.
 
      This is the ONLY block that loads CSS/JS. Every section block
-     is pure markup. Paste this first.
+     is pure markup, so without this the page renders unstyled.
+     Paste it first.
+
+     REQUIRED vs OPTIONAL
+     Only two parts are required: the Google Fonts <link> and the
+     jsDelivr <link>/<script> at the bottom. The SW_ASSETS and
+     :root blocks in between are empty placeholders — they exist so
+     you can override media and theme tokens from Kajabi later. The
+     page works fine if you delete them.
+
+     Prefer the Head setting: <link> and <script> do work inside a
+     body-level Custom Code block, but the page will flash unstyled
+     before the CSS lands.
      ============================================================ -->
 
 <!-- ── Fonts ────────────────────────────────────────────────
@@ -58,21 +70,21 @@
 </style>
 
 <!-- ── Styles + behaviour ───────────────────────────────────
-     Pinned to the v1.0.0 tag. A tag is immutable, so jsDelivr caches it
+     Pinned to the v1.1.0 tag. A tag is immutable, so jsDelivr caches it
      hard and it can never change under the live site.
 
      After pushing a new tag, bump BOTH version numbers below.
      See README.md → "Releasing a new version".
 
-     While iterating you can swap @v1.0.0 for @main to pick up the
+     While iterating you can swap @v1.1.0 for @main to pick up the
      latest commit — but jsDelivr caches floating refs for up to 12h,
      so purge after each push:
        https://purge.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@main/dist/sirwade.css -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.0.0/dist/sirwade.css"
+  href="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.1.0/dist/sirwade.css"
 />
 <script
   defer
-  src="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.0.0/dist/sirwade.js"
+  src="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.1.0/dist/sirwade.js"
 ></script>

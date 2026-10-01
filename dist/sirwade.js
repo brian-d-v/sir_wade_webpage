@@ -40,10 +40,15 @@
     },
 
     hero: {
-      /* Swap for an .mp4 or .gif of the portal shot — the <video> in
-         blocks/02-hero.html picks up whichever you point this at. */
+      /* The portal plate, extracted from Revisions_BannerV2.png and served
+         from this repo. It is a STILL LIFTED FROM A FLATTENED COMP, not the
+         original render — good enough to ship, soft on retina.
+
+         Replace it with the real plate (or better, a looping video) by
+         pointing this key at your own upload; .mp4/.webm/.gif all work and
+         the <img> is swapped for a <video> automatically. */
       media:
-        "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/themes/2166669474/settings_images/2ace3d1-83f-ca6c-44a-8320efd6d66_c12eba93-b43a-414e-97c2-cfa1c4a48097.jpg",
+        "https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.1.0/assets/hero-rift.webp",
       poster: "",
     },
 
