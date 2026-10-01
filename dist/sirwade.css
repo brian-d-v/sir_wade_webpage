@@ -1011,8 +1011,9 @@
    50 — REVIEWS
    Near-black band, two marquee rows drifting in opposite directions.
 
-   Each row's track is duplicated once in the DOM (done by JS, not by hand)
-   and translated -50%, so the loop is seamless. Hovering pauses it.
+   Each row is a scroll container whose cards are repeated by JS until they
+   exceed the viewport, so the loop is seamless. Grab and drag to scrub;
+   release and it coasts back into the drift. Pauses on hover.
    ========================================================================== */
 
 .sw-scope.sw-reviews {
@@ -1044,12 +1045,33 @@
   right: clamp(8rem, 22vw, 20rem);
 }
 
-/* ── Marquee ─────────────────────────────────────────────── */
+/* ── Marquee ─────────────────────────────────────────────────
+   A real horizontal scroll container, not a CSS animation.
+   src/js/20-reviews.js drifts scrollLeft each frame and hands control to
+   the pointer while dragging. Using scroll rather than @keyframes is what
+   makes it grabbable — a keyframe animation owns its own position and
+   can't be taken over mid-flight — and it gets trackpad swipe, shift-wheel
+   and native touch momentum for free.
+
+   Drift pauses on hover (handled in JS — there is no CSS animation left
+   to pause). */
 .sw-scope.sw-reviews .sw-marquee {
   position: relative;
   width: 100%;
   margin-inline: 0;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Don't let a horizontal fling trigger the browser's back-swipe. */
+  overscroll-behavior-x: contain;
+  /* A theme-level `scroll-behavior: smooth` would animate every frame's
+     write and fight the drift loop. */
+  scroll-behavior: auto !important;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Hide the scrollbar without losing scrollability. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* fade the cards out at both edges instead of hard-cutting them */
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -1066,6 +1088,15 @@
     transparent 100%
   );
 }
+/* WebKit needs the pseudo-element; scrollbar-width covers the rest. */
+.sw-scope.sw-reviews .sw-marquee::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.sw-scope.sw-reviews .sw-marquee.is-dragging {
+  cursor: grabbing;
+}
 .sw-scope.sw-reviews .sw-marquee + .sw-marquee {
   margin-top: clamp(0.9rem, 1.6vw, 1.5rem);
 }
@@ -1074,31 +1105,12 @@
   gap: clamp(0.9rem, 1.6vw, 1.5rem);
   width: max-content;
   padding-inline: clamp(0.45rem, 0.8vw, 0.75rem);
-  animation: sw-marquee-left var(--sw-marquee-duration) linear infinite;
 }
-.sw-scope.sw-reviews .sw-marquee.is-reverse .sw-marquee-track {
-  animation-name: sw-marquee-right;
-}
-.sw-scope.sw-reviews .sw-marquee:hover .sw-marquee-track,
-.sw-scope.sw-reviews .sw-marquee:focus-within .sw-marquee-track {
-  animation-play-state: paused;
-}
-
-@keyframes sw-marquee-left {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-@keyframes sw-marquee-right {
-  from {
-    transform: translate3d(-50%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+/* Native image dragging would hijack the grab gesture. */
+.sw-scope.sw-reviews .sw-marquee-track img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
 }
 
 /* ── Review card ─────────────────────────────────────────── */

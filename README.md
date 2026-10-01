@@ -139,7 +139,7 @@ it back to private takes the live site's CSS and JS down with it.
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
 | `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
 
-The head snippet is currently pinned to **`@v1.5.0`**.
+The head snippet is currently pinned to **`@v1.6.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -149,12 +149,12 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.5.1
+git tag v1.6.1
 git push && git push --tags
 ```
 
 Then bump the tag in the two CDN URLs in the Kajabi head snippet
-(`@v1.5.0` → `@v1.5.1`). The old version keeps serving until you do, so the
+(`@v1.6.0` → `@v1.6.1`). The old version keeps serving until you do, so the
 live page never breaks mid-release.
 
 If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
@@ -177,7 +177,7 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.5.0`.
+   `brian-d-v/sir_wade_webpage@v1.6.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
 3. Setting each section to **Full Width** with **0 padding** is still worth
