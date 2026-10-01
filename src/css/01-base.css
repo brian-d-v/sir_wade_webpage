@@ -7,27 +7,16 @@
    are anchored to `.sw-scope`, so Kajabi's theme CSS can't bleed in and ours
    can't bleed out.
 
-   Kajabi's section wrappers add their own padding and max-width. Set each
-   section to full-width with 0 padding in the Kajabi editor; the overrides
-   at the bottom of this file clean up what's left.
+   Kajabi's section wrappers add their own padding and max-width. The
+   wrapper reset below strips both, so the bands reach the page edges
+   whatever the section is set to in the editor.
    ========================================================================== */
 
 /* ── Width ───────────────────────────────────────────────────
-   Blocks simply fill their container. They do NOT try to break out of it.
-
-   Two earlier attempts at a breakout both failed in Kajabi, and the reason
-   is the same each time: any CSS escape has to guess where its container
-   sits, and a JS version has to guess which ancestor to measure against.
-   Kajabi's wrappers differ between the editor, the theme preview and the
-   live page, so every guess was wrong somewhere and the block ended up
-   shifted and clipped off the left edge.
-
-   Full width is Kajabi's job, and it already does it properly: set the
-   SECTION to full width in the editor and the block fills the viewport
-   with no tricks at all. Horizontal spacing is now entirely that setting.
-
-   The vertical reset below stays, because section padding has no
-   equivalent per-section control in every theme. */
+   Blocks simply fill their container at width:100%. They do NOT try to
+   break out of it — the wrapper reset below removes the constraint
+   instead, which is a different and much safer thing. See the note there
+   for why two earlier breakout attempts both failed. */
 .sw-scope {
   font-family: var(--sw-font-body) !important;
   font-weight: 400;
@@ -48,9 +37,9 @@
    section and block wrappers, which sit ABOVE us in the DOM — so the only
    way to reach them is to select on what they contain.
 
-   Kajabi nests roughly section > container > content > block > ours, so
-   two levels wasn't enough; the <section> carrying the padding sits three
-   or four up. Its padding is often an inline style, which a stylesheet
+   Kajabi nests section > container > row > col-12 > block > ours, so the
+   <section> carrying the padding sits FIVE levels up — hence the five
+   selectors. Its padding is often an inline style, which a stylesheet
    !important still beats.
 
    It also drops the wrappers' side padding and max-width, which is what
@@ -71,7 +60,8 @@
 *:has(> .sw-scope:not(.sw-keep-wrapper)),
 *:has(> * > .sw-scope:not(.sw-keep-wrapper)),
 *:has(> * > * > .sw-scope:not(.sw-keep-wrapper)),
-*:has(> * > * > * > .sw-scope:not(.sw-keep-wrapper)) {
+*:has(> * > * > * > .sw-scope:not(.sw-keep-wrapper)),
+*:has(> * > * > * > * > .sw-scope:not(.sw-keep-wrapper)) {
   padding: 0 !important;
   margin-block: 0 !important;
   max-width: none !important;
@@ -276,6 +266,42 @@
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+
+/* ── Collapse a misplaced head snippet ───────────────────────
+   blocks/00-head.html belongs in Settings → Custom Code → Head. Pasted
+   into a page Custom Code block instead, its <link>/<script>/<style>
+   render nothing — but Kajabi still wraps them in
+   block > col-12 > row > container > section, and that chain takes a full
+   section's padding. The result is a few hundred pixels of blank space,
+   usually at the very top of the page, with nothing visible in it.
+
+   So: hide any wrapper that contains the head marker and no actual band.
+   The `:not(:has(.sw-scope))` guard is what makes this safe — a wrapper
+   holding a real section is never touched, so if the snippet shares a
+   section with a band, only the marker itself disappears.
+
+   The subject is restricted to wrapper elements so <body> can never match,
+   even on a page that has the snippet and no bands at all. */
+.sw-head-marker {
+  display: none !important;
+}
+:is(div, section, article, aside):has(> .sw-head-marker):not(
+    :has(.sw-scope)
+  ),
+:is(div, section, article, aside):has(> * > .sw-head-marker):not(
+    :has(.sw-scope)
+  ),
+:is(div, section, article, aside):has(> * > * > .sw-head-marker):not(
+    :has(.sw-scope)
+  ),
+:is(div, section, article, aside):has(> * > * > * > .sw-head-marker):not(
+    :has(.sw-scope)
+  ),
+:is(div, section, article, aside):has(> * > * > * > * > .sw-head-marker):not(
+    :has(.sw-scope)
+  ) {
+  display: none !important;
 }
 
 /* No-ops. Blocks pasted while the breakout existed may still carry these

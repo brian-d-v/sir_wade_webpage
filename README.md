@@ -139,7 +139,7 @@ it back to private takes the live site's CSS and JS down with it.
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
 | `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
 
-The head snippet is currently pinned to **`@v1.4.0`**.
+The head snippet is currently pinned to **`@v1.5.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -149,12 +149,12 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.4.1
+git tag v1.5.1
 git push && git push --tags
 ```
 
 Then bump the tag in the two CDN URLs in the Kajabi head snippet
-(`@v1.4.0` → `@v1.4.1`). The old version keeps serving until you do, so the
+(`@v1.5.0` → `@v1.5.1`). The old version keeps serving until you do, so the
 live page never breaks mid-release.
 
 If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
@@ -177,7 +177,7 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.4.0`.
+   `brian-d-v/sir_wade_webpage@v1.5.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
 3. Setting each section to **Full Width** with **0 padding** is still worth
@@ -225,10 +225,17 @@ survives:
 
 1. **Bands not reaching the edges** — the section isn't set to Full Width.
    Editor → section settings → Width → Full.
-2. **A gap above the first band** — look for a *sibling*: an empty section,
-   a spacer block, or a hidden theme header still reserving its space. CSS
-   can only reach ancestors, so nothing here can remove it. Delete it in the
-   editor.
+2. **A gap above the first band** — this is almost always the head snippet
+   pasted into a page Custom Code block rather than Settings → Custom Code
+   → Head. Its tags render nothing, but Kajabi still wraps them in a full
+   section, which takes a full section's padding: ~230px of blank space
+   with nothing in it.
+
+   Move it to the Head setting. That also removes the flash of unstyled
+   content you get when the CSS loads from inside the body. If it stays in
+   a block, the stylesheet now collapses the empty wrappers around it via
+   the `sw-head-marker` element at the top of the snippet — but that's a
+   safety net, not the intended setup.
 3. **Leftover space between bands** — zero the section's top/bottom padding
    in the editor. If a theme won't let you, set `--sw-bleed-y: -40px` in the
    head snippet's `:root` block as a last resort.
