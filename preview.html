@@ -66,12 +66,16 @@
 </style>
 
 <!-- ── Styles + behaviour ───────────────────────────────────
-     REPLACE `USER/REPO` with your GitHub handle and repo name.
+     Pinned to the v1.0.0 tag. A tag is immutable, so jsDelivr caches it
+     hard and it can never change under the live site.
 
-     The @main tag below serves the latest commit but jsDelivr caches
-     it for up to 12h. For production, publish a git tag and pin it:
-         @v1.0.0  instead of  @main
-     See README.md → "Releasing a new version". -->
+     After pushing a new tag, bump BOTH version numbers below.
+     See README.md → "Releasing a new version".
+
+     While iterating you can swap @v1.0.0 for @main to pick up the
+     latest commit — but jsDelivr caches floating refs for up to 12h,
+     so purge after each push:
+       https://purge.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@main/dist/sirwade.css -->
 <link rel="stylesheet" href="dist/sirwade.css" />
 <script defer src="dist/sirwade.js"></script>
 

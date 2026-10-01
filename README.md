@@ -17,7 +17,7 @@ Kajabi page
 │     ├── Google Fonts
 │     ├── window.SW_ASSETS  ← your Kajabi media URLs
 │     ├── optional :root token overrides
-│     └── <link>/<script> → cdn.jsdelivr.net/gh/USER/REPO@TAG/dist/*
+│     └── <link>/<script> → cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@TAG/dist/*
 │
 └── Section blocks (one Kajabi Custom Code block each)
       01-nav · 02-hero · 03-classes · 04-mentorship · 05-reviews
@@ -126,10 +126,11 @@ no deploy:
 jsDelivr serves any public GitHub repo for free, no account or config:
 
 ```
-https://cdn.jsdelivr.net/gh/USER/REPO@TAG/dist/sirwade.css
+https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@TAG/dist/sirwade.css
 ```
 
-**The repo must be public.** jsDelivr cannot read private repos.
+**This repo must stay public.** jsDelivr cannot read private repos — flipping
+it back to private takes the live site's CSS and JS down with it.
 
 ### Which `@TAG` to use
 
@@ -158,7 +159,7 @@ and the old version keeps working until you do.
 If you're on a floating ref and need the change now, purge it:
 
 ```
-https://purge.jsdelivr.net/gh/USER/REPO@main/dist/sirwade.css
+https://purge.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@main/dist/sirwade.css
 ```
 
 Hit that URL in a browser. Purging is rate-limited, which is the other reason
@@ -169,7 +170,8 @@ to pin tags in production.
 ## Pasting into Kajabi
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
-   Paste `blocks/00-head.html`. Replace `USER/REPO` with your handle and repo.
+   Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
+   `brian-d-v/sir_wade_webpage@v1.0.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
 3. For every section, set the Kajabi section to **full width** with **0
