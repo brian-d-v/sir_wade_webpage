@@ -139,7 +139,7 @@ it back to private takes the live site's CSS and JS down with it.
 | `@main` | up to 12h | Development. Convenient, but edits take hours to show |
 | `@v1.2.3` | permanent | **Production.** A tag is immutable, so it's cached hard and can never change under you |
 
-The head snippet is currently pinned to **`@v1.1.0`**.
+The head snippet is currently pinned to **`@v1.2.0`**.
 
 Floating refs like `@main` and `@latest` are cached for 12 hours. During a
 build-out that lag is maddening; pin a tag once the page is live.
@@ -149,12 +149,12 @@ build-out that lag is maddening; pin a tag once the page is live.
 ```bash
 node build.mjs
 git add -A && git commit -m "Tweak hero arc"
-git tag v1.1.1
+git tag v1.2.1
 git push && git push --tags
 ```
 
 Then bump the tag in the two CDN URLs in the Kajabi head snippet
-(`@v1.1.0` → `@v1.1.1`). The old version keeps serving until you do, so the
+(`@v1.2.0` → `@v1.2.1`). The old version keeps serving until you do, so the
 live page never breaks mid-release.
 
 If a release touches `assets/`, bump the tag in `src/js/00-assets.js` too —
@@ -177,7 +177,7 @@ to pin tags in production.
 
 1. **Head snippet** — Site Settings (or Page Settings) → Custom Code → Head.
    Paste `blocks/00-head.html` as-is; its CDN URLs are already pinned to
-   `brian-d-v/sir_wade_webpage@v1.1.0`.
+   `brian-d-v/sir_wade_webpage@v1.2.0`.
 2. **Sections** — add one Custom Code block per file, in numeric order, pasting
    the whole file each time.
 3. For every section, set the Kajabi section to **full width** with **0
@@ -185,6 +185,33 @@ to pin tags in production.
    full-bleed bands and the wave dividers.
 4. The nav and footer blocks are optional — skip them if you're keeping
    Kajabi's native header and footer. Nothing else depends on them.
+
+### Gaps around the blocks
+
+Kajabi wraps every custom code block in a centred, padded container, which
+shows up as a margin around each full-width band. The stylesheet handles this
+on its own, in two parts:
+
+- **Sideways** — each block breaks out of its container with a negative
+  margin of half the difference between the container and the viewport. It
+  uses `--sw-vw` (viewport minus scrollbar) rather than `100vw`, so the
+  breakout can't introduce horizontal scroll.
+- **Vertically** — a `:has()` rule zeroes the padding on the two wrapper
+  levels closest to each block. It selects on *what the wrapper contains*,
+  since those wrappers are Kajabi's and their class names vary by theme.
+
+So a freshly pasted block should sit flush without any editor work. If a gap
+survives:
+
+1. Zero the section's top/bottom padding in the Kajabi editor and set its
+   width to Full. This is the real fix — the CSS is a safety net.
+2. Check for an empty section or spacer block above the first band.
+3. As a last resort, set `--sw-bleed-y: -40px` in the head snippet's `:root`
+   block to pull the bands together.
+
+To opt a block out of any of this, add `sw-contained` (keeps the container
+width) or `sw-keep-wrapper` (leaves the wrapper padding alone) to its root
+element.
 
 ### Before going live
 
@@ -212,10 +239,18 @@ to pin tags in production.
 block root carries `.sw-scope` and all CSS is anchored to it. Kajabi's theme
 can't bleed in; ours can't bleed out.
 
-**The hero arc** is a `clip-path: ellipse()` fitted to the mockup — a circle
-centred at (79%, 120%) of the hero box, radius 56% of its width. Written in
+**The hero arc** is a `clip-path: ellipse()` whose geometry was *measured*,
+not eyeballed: the cream/plate boundary is traced out of the mockup row by
+row, then least-squares fitted to a circle — centre (99.5%, 157%), radius
+79.7% of the hero width, max error 22px across 1,125 rows. Written in
 percentages it holds the same composition at any viewport. Reshape it from the
 `--sw-hero-arc-*` tokens; below 900px it drops to a full-bleed scrim.
+
+Two things depend on those numbers staying in sync. The hero copy column is
+sized against the measured clearance (the headline reaches 44.4% of the hero
+width where the arc is at 50.6%), and `assets/hero-rift.webp` has the region
+the arc hides edge-extended using the same ellipse. Change the tokens and both
+want revisiting.
 
 **Wave dividers** are inline SVG on the *upper* section, filled with the colour
 of the section below. The colour is set inline in the block, so the fill and

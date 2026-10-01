@@ -61,20 +61,42 @@
   --sw-display-tracking: 0.04em;
 
   /* ── Layout ─────────────────────────────────────────────── */
-  --sw-max: 1360px; /* content container width */
-  --sw-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  /* The mockup insets every section ~4.3% from the viewport edge rather
+     than centring a narrow column, so the gutter is percentage-based and
+     --sw-max only kicks in past ~1920px to stop lines running too long.
+     Both values must stay in step across sections or the hero copy and the
+     section headings below it visibly fail to line up. */
+  --sw-max: 1920px;
+  --sw-gutter: clamp(1.25rem, 4.3vw, 5.5rem);
   --sw-section-y: clamp(3.5rem, 7vw, 6rem);
   --sw-radius: 14px;
   --sw-radius-lg: 22px;
 
   /* ── Hero arc ───────────────────────────────────────────────
-     The curved mask over the hero media. Derived by fitting a circle
-     to the mockup: centre (79%, 120%), radius 56% of hero width.
-     Nudge these three to reshape the curve. */
-  --sw-hero-arc-rx: 56%;
-  --sw-hero-arc-ry: 128%;
-  --sw-hero-arc-cx: 79%;
-  --sw-hero-arc-cy: 120%;
+     The curved mask over the hero media. These come from a least-squares
+     circle fit to the boundary traced out of Revisions_BannerV2.png row
+     by row — centre (2554, 1766) radius 2044 in the mockup's 2566x1124
+     hero box, normalised below. Max error 22px across 1125 rows.
+
+     Expressed as percentages the curve keeps the same composition at any
+     aspect ratio. Don't shrink the radii much: the top-right corner sits
+     at 0.75 of the ellipse, and values near 1.0 start clipping it. */
+  --sw-hero-arc-rx: 79.7%;
+  --sw-hero-arc-ry: 181.7%;
+  --sw-hero-arc-cx: 99.5%;
+  --sw-hero-arc-cy: 157%;
+
+  /* ── Full-bleed ─────────────────────────────────────────────
+     --sw-vw is the viewport width EXCLUDING the scrollbar. 100vw
+     includes it, which would push a full-bleed block a scrollbar's
+     width too wide and cause horizontal scroll; src/js/05-viewport.js
+     overwrites this with the measured value on load and resize.
+
+     --sw-bleed-y pulls sections together vertically. Leave it at 0 and
+     zero the section padding in the Kajabi editor; set it to a negative
+     length only if a theme forces padding you can't reach. */
+  --sw-vw: 100vw;
+  --sw-bleed-y: 0px;
 
   /* ── Motion ─────────────────────────────────────────────── */
   --sw-ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -95,16 +117,59 @@
    at the bottom of this file clean up what's left.
    ========================================================================== */
 
+/* ── Full-bleed by default ───────────────────────────────────
+   Kajabi wraps every custom code block in a centred, padded container,
+   which leaves a visible margin around each of these full-width bands.
+   Zeroing it in the editor is the clean fix, but themes vary in how much
+   of that padding they actually expose, so every block breaks out of its
+   container here as well.
+
+   The breakout is the standard centred-container escape: push out by half
+   the difference between the container and the viewport. --sw-vw excludes
+   the scrollbar (see 00-tokens.css), so this cannot cause horizontal
+   scroll the way a raw 100vw would.
+
+   Add .sw-contained to a block root to opt out. */
 .sw-scope {
   font-family: var(--sw-font-body) !important;
   font-weight: 400;
   color: var(--sw-text);
   line-height: 1.6;
-  width: 100%;
   position: relative;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+
+  width: var(--sw-vw);
+  max-width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
+  margin-block: var(--sw-bleed-y);
+}
+.sw-scope.sw-contained {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  margin-block: 0;
+}
+
+/* ── Collapse the Kajabi wrappers ────────────────────────────
+   The horizontal breakout above handles side margins, but the vertical
+   gap between bands comes from padding on Kajabi's own section and block
+   wrappers — which sit ABOVE us in the DOM, so we can only reach them by
+   selecting on what they contain.
+
+   :has() targets the two wrapper levels closest to each block without
+   needing to know Kajabi's class names, which differ by theme. Zeroing
+   the Kajabi section padding in the editor is still the cleaner fix;
+   this is what makes the page look right before you get to it.
+
+   If a wrapper legitimately needs its padding, give the block inside it
+   .sw-keep-wrapper and this stops applying. */
+*:has(> .sw-scope:not(.sw-keep-wrapper)),
+*:has(> * > .sw-scope:not(.sw-keep-wrapper)) {
+  padding-block: 0 !important;
+  margin-block: 0 !important;
+  padding-inline: 0 !important;
 }
 .sw-scope *,
 .sw-scope *::before,
@@ -308,13 +373,12 @@
   white-space: nowrap;
 }
 
-/* ── Kajabi wrapper neutralisers ─────────────────────────────
-   Kajabi wraps custom code in .sw-scope's parent chain. These let a
-   block go edge-to-edge even if the section still has side padding. */
+/* Legacy alias — the breakout is now the default on .sw-scope. Kept so
+   blocks pasted before that change keep working. */
 .sw-scope.sw-bleed {
-  margin-inline: calc(50% - 50vw);
-  width: 100vw;
-  max-width: 100vw;
+  width: var(--sw-vw);
+  max-width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -439,8 +503,10 @@
   overflow: hidden;
   min-height: clamp(380px, 44vw, 620px);
   display: flex;
-  align-items: center;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  /* Top-aligned, not centred: the arc is at its widest low in the frame,
+     so centred copy runs into it. */
+  align-items: flex-start;
+  padding-block: clamp(2.25rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 4rem);
 }
 
 /* ── Media layer ─────────────────────────────────────────── */
@@ -487,8 +553,11 @@
   position: relative;
   z-index: 2;
 }
+/* In the mockup the headline reaches 44.4% of the hero width and the arc is
+   at 50.6% on that row — about 6% of clearance. This column is sized to keep
+   roughly that margin. Raising it is what pushes the headline into the rift. */
 .sw-scope.sw-hero .sw-hero-copy {
-  max-width: min(46%, 34rem);
+  max-width: var(--sw-hero-copy-max, 44%);
 }
 .sw-scope.sw-hero .sw-hero-title {
   font-family: var(--sw-font-body) !important;
@@ -947,8 +1016,8 @@
 /* ── Marquee ─────────────────────────────────────────────── */
 .sw-scope.sw-reviews .sw-marquee {
   position: relative;
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+  width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
   overflow: hidden;
   /* fade the cards out at both edges instead of hard-cutting them */
   -webkit-mask-image: linear-gradient(
@@ -1256,8 +1325,8 @@
 /* ── Coverflow ───────────────────────────────────────────── */
 .sw-scope.sw-tutorials .sw-flow {
   position: relative;
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+  width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
   height: clamp(220px, 32vw, 470px);
   perspective: 1600px;
   perspective-origin: 50% 50%;

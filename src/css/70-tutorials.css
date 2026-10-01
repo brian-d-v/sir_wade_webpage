@@ -34,8 +34,8 @@
 /* ── Coverflow ───────────────────────────────────────────── */
 .sw-scope.sw-tutorials .sw-flow {
   position: relative;
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+  width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
   height: clamp(220px, 32vw, 470px);
   perspective: 1600px;
   perspective-origin: 50% 50%;

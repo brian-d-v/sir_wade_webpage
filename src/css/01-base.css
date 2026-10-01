@@ -12,16 +12,59 @@
    at the bottom of this file clean up what's left.
    ========================================================================== */
 
+/* ── Full-bleed by default ───────────────────────────────────
+   Kajabi wraps every custom code block in a centred, padded container,
+   which leaves a visible margin around each of these full-width bands.
+   Zeroing it in the editor is the clean fix, but themes vary in how much
+   of that padding they actually expose, so every block breaks out of its
+   container here as well.
+
+   The breakout is the standard centred-container escape: push out by half
+   the difference between the container and the viewport. --sw-vw excludes
+   the scrollbar (see 00-tokens.css), so this cannot cause horizontal
+   scroll the way a raw 100vw would.
+
+   Add .sw-contained to a block root to opt out. */
 .sw-scope {
   font-family: var(--sw-font-body) !important;
   font-weight: 400;
   color: var(--sw-text);
   line-height: 1.6;
-  width: 100%;
   position: relative;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+
+  width: var(--sw-vw);
+  max-width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
+  margin-block: var(--sw-bleed-y);
+}
+.sw-scope.sw-contained {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  margin-block: 0;
+}
+
+/* ── Collapse the Kajabi wrappers ────────────────────────────
+   The horizontal breakout above handles side margins, but the vertical
+   gap between bands comes from padding on Kajabi's own section and block
+   wrappers — which sit ABOVE us in the DOM, so we can only reach them by
+   selecting on what they contain.
+
+   :has() targets the two wrapper levels closest to each block without
+   needing to know Kajabi's class names, which differ by theme. Zeroing
+   the Kajabi section padding in the editor is still the cleaner fix;
+   this is what makes the page look right before you get to it.
+
+   If a wrapper legitimately needs its padding, give the block inside it
+   .sw-keep-wrapper and this stops applying. */
+*:has(> .sw-scope:not(.sw-keep-wrapper)),
+*:has(> * > .sw-scope:not(.sw-keep-wrapper)) {
+  padding-block: 0 !important;
+  margin-block: 0 !important;
+  padding-inline: 0 !important;
 }
 .sw-scope *,
 .sw-scope *::before,
@@ -225,13 +268,12 @@
   white-space: nowrap;
 }
 
-/* ── Kajabi wrapper neutralisers ─────────────────────────────
-   Kajabi wraps custom code in .sw-scope's parent chain. These let a
-   block go edge-to-edge even if the section still has side padding. */
+/* Legacy alias — the breakout is now the default on .sw-scope. Kept so
+   blocks pasted before that change keep working. */
 .sw-scope.sw-bleed {
-  margin-inline: calc(50% - 50vw);
-  width: 100vw;
-  max-width: 100vw;
+  width: var(--sw-vw);
+  max-width: var(--sw-vw);
+  margin-inline: calc(50% - var(--sw-vw) / 2);
 }
 
 @media (prefers-reduced-motion: reduce) {

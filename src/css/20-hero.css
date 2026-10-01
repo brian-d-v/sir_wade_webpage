@@ -14,8 +14,10 @@
   overflow: hidden;
   min-height: clamp(380px, 44vw, 620px);
   display: flex;
-  align-items: center;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  /* Top-aligned, not centred: the arc is at its widest low in the frame,
+     so centred copy runs into it. */
+  align-items: flex-start;
+  padding-block: clamp(2.25rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 4rem);
 }
 
 /* ── Media layer ─────────────────────────────────────────── */
@@ -62,8 +64,11 @@
   position: relative;
   z-index: 2;
 }
+/* In the mockup the headline reaches 44.4% of the hero width and the arc is
+   at 50.6% on that row — about 6% of clearance. This column is sized to keep
+   roughly that margin. Raising it is what pushes the headline into the rift. */
 .sw-scope.sw-hero .sw-hero-copy {
-  max-width: min(46%, 34rem);
+  max-width: var(--sw-hero-copy-max, 44%);
 }
 .sw-scope.sw-hero .sw-hero-title {
   font-family: var(--sw-font-body) !important;

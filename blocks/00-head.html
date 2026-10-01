@@ -66,25 +66,35 @@
     /* --sw-green: #376d53; */
     /* --sw-font-display: "Your Brand Marker", cursive; */
     /* --sw-display-skew: 0deg; */
+
+    /* Last-resort spacing fix. The stylesheet already collapses Kajabi's
+       section and block padding, so you should not need this. If a gap
+       survives between bands, pull them together with a negative value
+       (start around -40px) rather than guessing at theme CSS. */
+    /* --sw-bleed-y: -40px; */
+
+    /* Width of the hero copy column, as a % of the hero. Past ~46% the
+       headline starts running into the rift. */
+    /* --sw-hero-copy-max: 44%; */
   }
 </style>
 
 <!-- ── Styles + behaviour ───────────────────────────────────
-     Pinned to the v1.1.0 tag. A tag is immutable, so jsDelivr caches it
+     Pinned to the v1.2.0 tag. A tag is immutable, so jsDelivr caches it
      hard and it can never change under the live site.
 
      After pushing a new tag, bump BOTH version numbers below.
      See README.md → "Releasing a new version".
 
-     While iterating you can swap @v1.1.0 for @main to pick up the
+     While iterating you can swap @v1.2.0 for @main to pick up the
      latest commit — but jsDelivr caches floating refs for up to 12h,
      so purge after each push:
        https://purge.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@main/dist/sirwade.css -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.1.0/dist/sirwade.css"
+  href="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.2.0/dist/sirwade.css"
 />
 <script
   defer
-  src="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.1.0/dist/sirwade.js"
+  src="https://cdn.jsdelivr.net/gh/brian-d-v/sir_wade_webpage@v1.2.0/dist/sirwade.js"
 ></script>
